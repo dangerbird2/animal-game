@@ -7,5 +7,10 @@ for CMPS 1600, project 2
 #define _ANIMAL_BTREE_H_
 
 
+typedef struct slsBNode slsBNode;
+struct slsBNode {
+
+};
+
 
 #endif //_ANIMAL_BTREE_H_
