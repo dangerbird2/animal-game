@@ -6,10 +6,34 @@ for CMPS 1600, project 2
 #ifndef _ANIMAL_BTREE_H_
 #define _ANIMAL_BTREE_H_
 
+#include <stdlib.h>
 
 typedef struct slsBNode slsBNode;
-struct slsBNode {
+typedef struct slsBTree slsBTree;
 
+typedef int (*slsCompareFn) (void const*,  void const*);
+typedef void (*slsFreeFn)   (void*);
+
+
+struct slsBTree {
+    size_t key_size;
+    size_t element_size;
+
+    slsCompareFn compare_fn;
+
+    slsFreeFn key_free_fn;
+    slsFreeFn val_key_fn;
+
+    slsBNode *head;
+};
+
+struct slsBNode {
+    slsBTree *tree;
+    slsBNode *left;
+    slsBNode *right;
+
+    void *key;
+    void *val;
 };
 
 
