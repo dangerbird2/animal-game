@@ -135,4 +135,6 @@ install_manifest.txt
 # sftp configuration file
 sftp-config.json
 
+# build dir
+build/
 

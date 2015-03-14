@@ -1,7 +1,12 @@
 #include <stdio.h>
+#include <gtest/gtest.h>
 
-int main(int argc, char const *argv[])
+/**
+ * @brief: main file for test suite
+ * @details initializes and runs the gtest runner
+ */
+int main(int argc, char *argv[])
 {
-    /* code */
-    return 0;
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

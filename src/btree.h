@@ -17,7 +17,7 @@ typedef void (*slsFreeFn)   (void*);
 
 struct slsBTree {
     size_t key_size;
-    size_t element_size;
+    size_t val_size;
 
     slsCompareFn compare_fn;
 
@@ -35,6 +35,15 @@ struct slsBNode {
     void *key;
     void *val;
 };
+
+slsBTree *sls_btree_new(
+    size_t key_size, 
+    size_t val_size,
+    slsCompareFn compare_fn,
+    slsFreeFn key_free_fn,
+    slsFreeFn val_free_fn);
+
+void sls_btree_destroy(slsBTree *tree);
 
 
 #endif //_ANIMAL_BTREE_H_
