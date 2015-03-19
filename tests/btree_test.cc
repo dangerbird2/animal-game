@@ -24,7 +24,7 @@ protected:
 
     virtual void SetUp() {
         tree = sls_btree_new(
-            sizeof(int), 
+            sizeof(char*),
             sizeof(int),
             mock_cmp,
             nullptr,
@@ -38,6 +38,15 @@ protected:
 
 TEST_F(BTreeTest, TreeExists) {
     EXPECT_NE(tree, nullptr) << "this->tree should not be nullptr";
+}
+
+TEST_F(BTreeTest, AddNode) {
+    auto node = sls_bnode_new(
+        tree,
+        (void*)"headnode",
+        nullptr);
+    EXPECT_NE(head, nullptr);
+
 }
 
 } // slsTest
