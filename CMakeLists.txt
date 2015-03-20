@@ -10,7 +10,8 @@ set(ANIMAL_SRC
 
 set(ANIMAL_TEST_SRC
     tests/test_run.cc
-    tests/btree_test.cc)
+    tests/btree_test.cc
+    tests/animal_test.cc)
 
 add_subdirectory(extern/googletest)
 include_directories(extern/googletest/include)
