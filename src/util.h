@@ -4,9 +4,9 @@
 /**
  * boolean enum type
  */
-enum slsBool {
+typedef enum slsBool {
     SLS_FALSE = 0,
     SLS_TRUE = 1
-};
+} slsBool;
 
 #endif // _SLS_UTIL_H_

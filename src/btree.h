@@ -16,6 +16,11 @@ typedef int (*slsCompareFn) (void const*,  void const*);
 typedef void *(*slsCopyFn)   (void const*);
 typedef void (*slsFreeFn)   (void*);
 
+typedef enum slsChildSelector{
+    SLS_CHILD_LEFT,
+    SLS_CHILD_RIGHT
+} slsChildSelector;
+
 
 /**
  * @brief binary tree ADT
@@ -26,7 +31,6 @@ typedef void (*slsFreeFn)   (void*);
  * callbacks necessary for their logic
  */
 struct slsBTree {
-    slsCompareFn compare_fn;
     
     /**
      * callback for copying values
@@ -43,6 +47,7 @@ struct slsBTree {
 
 struct slsBNode {
     slsBTree *tree;
+
     slsBNode *left;
     slsBNode *right;
 
@@ -60,7 +65,6 @@ struct slsBNode {
  * @return [description]
  */
 slsBTree *sls_btree_new(
-    slsCompareFn compare_fn,
     slsCopyFn copy_fn,
     slsFreeFn free_fn);
 
@@ -93,6 +97,7 @@ slsBNode *sls_bnode_new(
 );
 
 void sls_bnode_destroy(slsBNode *node);
+
 
 
 #endif //_ANIMAL_BTREE_H_

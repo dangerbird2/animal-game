@@ -42,7 +42,6 @@ protected:
 
     virtual void SetUp() {
         tree = sls_btree_new(
-            mock_cmp,
             mock_copy,
             mock_free);
     }

@@ -13,7 +13,6 @@ for CMPS 1600, project 2
 
 
 slsBTree *sls_btree_new(
-    slsCompareFn compare_fn,
     slsCopyFn copy_fn,
     slsFreeFn free_fn)
 {
@@ -21,7 +20,6 @@ slsBTree *sls_btree_new(
     tree = calloc(sizeof(slsBTree), 1);
     /* ensure tree is allocated properly */
     if (tree) {
-        tree->compare_fn = compare_fn;
         tree->copy_fn = copy_fn;
         tree->free_fn = free_fn;
 
