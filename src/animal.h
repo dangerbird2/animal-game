@@ -51,4 +51,4 @@ char *sls_stringalloc(char const *str, size_t n);
 
 
 
-#endif //_ANIMAL_ANIMAL_H_
+#endif /* _ANIMAL_ANIMAL_H_ */

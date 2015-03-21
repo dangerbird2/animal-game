@@ -100,4 +100,4 @@ void sls_bnode_destroy(slsBNode *node);
 
 
 
-#endif //_ANIMAL_BTREE_H_
+#endif /*_ANIMAL_BTREE_H_*/

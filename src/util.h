@@ -9,4 +9,4 @@ typedef enum slsBool {
     SLS_TRUE = 1
 } slsBool;
 
-#endif // _SLS_UTIL_H_
+#endif /* _SLS_UTIL_H_ */
