@@ -8,6 +8,7 @@ functions
 extern "C" {
     #include "../src/btree.h"
     #include "../src/animal.h"
+    #include "../src/util.h"
 }
 
 #endif // _INC_H_

@@ -3,6 +3,9 @@ Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
 */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "util.h"
 
@@ -24,4 +27,11 @@ char *sls_stringalloc(char const* str, size_t n)
     }
 
     return new_str;
+}
+
+char *sls_getline(FILE *file, size_t n)
+{
+    char *line = NULL;
+
+    return line;
 }

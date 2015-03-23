@@ -1,5 +1,6 @@
 #include "inc.h"
 #include <gtest/gtest.h>
+#include <string>
 
 
 /*
@@ -99,6 +100,29 @@ TEST_F(BTreeTest, AddNodeToTree) {
 
     /* ensure values are actually copied*/
     EXPECT_NE(&i, nodeA->val);
+}
+
+/**
+ * @brief Util test fixture
+ * @details tests general utility functions in util.c
+ */
+
+class UtilTest: public ::testing::Test {
+protected:
+
+    std::string str;
+
+    virtual void SetUp() {
+        str = "foo bar \n biff";
+    }
+
+    virtual void TearDown() {
+    }
+};
+
+TEST_F(UtilTest, TestStralloc) {
+    char *cpy = sls_stringalloc(str.c_str(), str.size() * sizeof(char));
+    EXPECT_STREQ(str.c_str(), cpy);
 }
 
 } // slsTest
