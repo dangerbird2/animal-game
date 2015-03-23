@@ -38,16 +38,7 @@ void *sls_animal_copy(void const *data);
 
 void sls_animal_free(void *data);
 
-/**
- * @brief: copies a string to a heap-allocated buffer
- * @details [long description]
- * 
- * @param str: source string
- * @param n: maximum string size
- * 
- * @return: a malloced string copy of source str
- */
-char *sls_stringalloc(char const *str, size_t n);
+
 
 
 

@@ -5,7 +5,9 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c90")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
 set(ANIMAL_SRC
-    src/animal.c)
+    src/animal.c
+    src/btree.c
+    src/util.c)
 
 
 set(ANIMAL_TEST_SRC
@@ -18,7 +20,7 @@ include_directories(extern/googletest/include)
 
 add_library(
     animal
-    ${ANIMAL_SRC} src/btree.h src/btree.c)
+    ${ANIMAL_SRC})
 
 add_executable(
     animal_main
