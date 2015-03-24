@@ -9,6 +9,7 @@ for CMPS 1600, project 2
 
 #include "util.h"
 
+
 char *sls_stringalloc(char const* str, size_t n)
 {
     char *new_str = NULL;
@@ -32,6 +33,42 @@ char *sls_stringalloc(char const* str, size_t n)
 char *sls_getline(FILE *file, size_t n)
 {
     char *line = NULL;
+    size_t len = 0;
+    size_t i =0;
+    size_t alloced_size = 16;
+    line = calloc(sizeof(char), alloced_size);
+
+    if (!line) {
+        fprintf(stderr, "memory error! \n");
+        return NULL;
+    }
+
+    for (i=0; i<n; ++i) {
+        int c = fgetc(file);
+
+        /* 
+        if numer of characters exceeds allocated memory, 
+        realloc array
+        */
+        if (i >= alloced_size) {
+            alloced_size *= 2;
+            line = realloc(line, alloced_size);
+            if (!line) { /* make sure realloc worked correctly */
+                line = NULL;
+                break;
+            }
+        }
+        /* end loop when you reach eof or newline */
+        if (c == EOF || c == '\n') {
+            break;
+        } else {
+            line[i] = c;
+
+        }
+
+    } 
+
+    line[i] = '\0'; /* make sure string null-terminates */
 
     return line;
 }
