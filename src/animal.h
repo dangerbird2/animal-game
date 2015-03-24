@@ -1,6 +1,9 @@
-/*
+/**
 Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
+
+@file
+@brief implementation of animal game
 */
 
 #ifndef _ANIMAL_ANIMAL_H_
