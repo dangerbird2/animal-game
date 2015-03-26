@@ -9,14 +9,24 @@ set(ANIMAL_SRC
     src/btree.c
     src/util.c)
 
+set(ANIMAL_HEADERS
+    src/animal_game.h
+    src/btree.h
+    src/util.h
+    src/animal.h)
+
+set(ANIMAL_INCLUDE_DEST ${CMAKE_BINARY_DIR}/include/)
 
 set(ANIMAL_TEST_SRC
     tests/test_run.cc
     tests/btree_test.cc
     tests/animal_test.cc)
 
+file(COPY ${ANIMAL_HEADERS}
+    DESTINATION ${ANIMAL_INCLUDE_DEST}/animal)
+
 add_subdirectory(extern/googletest)
-include_directories(extern/googletest/include)
+include_directories(extern/googletest/include ${ANIMAL_INCLUDE_DEST})
 
 add_library(
     animal

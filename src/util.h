@@ -21,6 +21,20 @@ typedef enum slsBool {
 
 
 /**
+ * @brief enum for user response codes
+ * @detailed SLS_YES and SLS_NO are equivilent to
+ * SLS_TRUE and SLS_FALSE respectively
+ */
+typedef enum slsResponse {
+    SLS_NO = SLS_FALSE,
+    SLS_YES = SLS_TRUE,
+    SLS_UNDETERMINED,
+    SLS_QUIT
+} slsResponse;
+
+
+
+/**
  * @brief copies a string to a heap-allocated buffer
  * @details you must free the returned pointer
  * 
@@ -41,5 +55,6 @@ char *sls_stringalloc(char const *str, size_t n);
  * @return malloced string. Must be freed manually
  */
 char *sls_getline(FILE *file, size_t n);
+
 
 #endif /* _SLS_UTIL_H_ */

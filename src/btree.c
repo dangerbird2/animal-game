@@ -35,7 +35,6 @@ slsBTree *sls_btree_new(
 void sls_btree_destroy(slsBTree *tree)
 {
     if (tree) {
-        
         if (tree->head) {
             sls_bnode_destroy(tree->head);
         }

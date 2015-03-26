@@ -1,6 +1,10 @@
-#include "inc.h"
+extern "C" {
+    #include "../src/animal_game.h"
+}
 #include <gtest/gtest.h>
 #include <string>
+#include <vector>
+#include <algorithm>
 
 
 /*
@@ -110,19 +114,73 @@ TEST_F(BTreeTest, AddNodeToTree) {
 class UtilTest: public ::testing::Test {
 protected:
 
-    std::string str;
+    std::string str_a;
+    std::string str_b;
+
 
     virtual void SetUp() {
-        str = "foo bar \n biff";
+        str_a = "foo bar \n biff";
+        str_b = "y";
     }
 
     virtual void TearDown() {
     }
 };
 
-TEST_F(UtilTest, TestStralloc) {
-    char *cpy = sls_stringalloc(str.c_str(), str.size() * sizeof(char));
-    EXPECT_STREQ(str.c_str(), cpy);
+TEST_F(UtilTest, Teststralloc) {
+    char *cpy_a = sls_stringalloc(str_a.c_str(), str_a.size() * sizeof(char));
+    char *cpy_b = sls_stringalloc(str_b.c_str(), str_b.size() * sizeof(char));
+    EXPECT_STREQ(str_a.c_str(), cpy_a);
+    EXPECT_STREQ(str_b.c_str(), cpy_b);
+    free(cpy_a);
+    free(cpy_b);
+
+
 }
+
+
+TEST_F(UtilTest, TestResParse) {
+
+    auto  yes= std::vector<char const*> {
+        "yes",
+        "y",
+        "Y",
+        "YES",
+        "yEs"};
+
+    auto no = std::vector<char const*>{
+        "no",
+        "NO",
+        "N",
+        "n"
+    };
+
+    auto undef = std::vector<char const*>{
+        "cow",
+        "aegaewgaeg"
+    };
+    auto quit = std::vector<char const*>{
+        "Q",
+        "q",
+        "Quit"
+    };
+
+    for (const auto &s: yes) {
+        EXPECT_EQ(SLS_YES, sls_parse_response(s)) << s << " should return SLS_YES";
+    }
+
+    for (const auto &s: no) {
+        EXPECT_EQ(SLS_NO, sls_parse_response(s)) << s << " should return SLS_NO";
+    }
+
+    for (const auto &s: undef) {
+        EXPECT_EQ(SLS_UNDETERMINED, sls_parse_response(s)) << s << " should return SLS_UNDETERMINED";
+    }
+
+    for (const auto &s: quit) {
+        EXPECT_EQ(SLS_QUIT, sls_parse_response(s)) << s << " should return SLS_QUIT";
+    }
+}
+
 
 } // slsTest

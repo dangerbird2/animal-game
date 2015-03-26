@@ -1,4 +1,6 @@
-#include "inc.h"
+extern "C" {
+    #include "../src/animal_game.h"
+}
 #include <gtest/gtest.h>
 
 class AnimalTests: public ::testing::Test {

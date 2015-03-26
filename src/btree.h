@@ -82,6 +82,11 @@ struct slsBNode {
     slsBTree *tree;
 
     /**
+     * @brief parent node
+     */
+    slsBNode *parent;
+
+    /**
      * @brief left node
      */
     slsBNode *left;
