@@ -31,6 +31,12 @@ make
 
 ```
 
+to build documentation:
+```bash
+doxygen ./doxyfile.in
+# open docs/html/index.html in browser
+```
+
 Animal game algorithm pseudocode:
 ---
 
