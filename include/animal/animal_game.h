@@ -12,4 +12,4 @@ for CMPS 1600, project 2
 #include "animal.h"
 
 
-#endif // SLS_ANIMAL_GAME_H
+#endif /* SLS_ANIMAL_GAME_H */
