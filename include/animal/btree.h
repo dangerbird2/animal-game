@@ -70,8 +70,10 @@ struct slsBTree {
 
 /**
  * @brief binary tree node for use in slsBTree type
- * @details [long description]
- * 
+ * @details stores a pointer to arbitrary data, whose
+ * memory is 'owned' by the binary tree. If the tree is
+ * constructed correctly, all memory will be freed when
+ * tree is destoryed
  */
 struct slsBNode {
     /**
@@ -118,7 +120,7 @@ slsBTree *sls_btree_new(
 
 /**
  * @brief destroys a binary tree and
- * |TODO| all nodes it contains
+ * all nodes it contains
  * @details [long description]
  * 
  * @param tree [description]

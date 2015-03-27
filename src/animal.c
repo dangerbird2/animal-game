@@ -208,7 +208,7 @@ slsBNode *sls_ask_new_animal(slsBNode *node)
 void sls_print_node(FILE *stream, slsBNode const *node)
 {
     if (!node || !node->val) {
-
+        return;
     }
     char const *node_desc = ((slsAnimalData*)(node->val))->description;
     char const *parent_desc = node->parent?
@@ -247,11 +247,20 @@ slsBNode *sls_decide_response(
     slsBNode *node, 
     slsResponse res)
 {
+    /*
+    TODO: simplify this logic
+    it works right now, but it's pretty damn confusing
+    */
     if (!node || !node->val || !node->tree) {
         assert(0);
         return NULL;
     }
+
     slsAnimalData *data = node->val;
+
+    /* 
+    first, see if we can traverse to a child node 
+    */
     slsBNode *new_node = *sls_attempt_traversal(node, res);
     if (new_node) {
         char const *dirrection = (new_node == node->left)?
@@ -260,13 +269,22 @@ slsBNode *sls_decide_response(
         fprintf(stderr, "moving to the %s node\n", dirrection);
         return new_node;
     }
-
-    
+    /*
+    if the attempted traversal returns a null pointer,
+    the program queries the user to expand its decision tree
+    */
 
     if (res == SLS_YES && data->is_species) {
+        /* in this event, the program guessed correctly, ending the game round */
         fprintf(stderr, "I guessed your animal!\nLet's play again\n");
         new_node = node->tree->head;
-    } else if (res == SLS_NO && data->is_species) {
+    } 
+    else if (res == SLS_NO && data->is_species) {
+        /* 
+        here, the game guessed correctly, and the current question is an animal.
+        It will ask the user for a new catagory to differentiate the user's (unkown)
+        animal and the animal currently given
+        */
         fprintf(stderr, "I guessed wrong.\n");
         new_node = sls_ask_new_category(node);
         slsBNode *parent = node->parent;
@@ -278,12 +296,29 @@ slsBNode *sls_decide_response(
         } else {
             parent->right = new_node;
         }
-    } else {
+        new_node->left = node;
+
+    } 
+    else if (!data->is_species) {
+        /*
+        in this case, the current node describes a category.
+        It will ask the user for the animal he/she was thinking about,
         
+        */
+        new_node = sls_ask_new_animal(node);
+        new_node->parent = node;
+        if (res == SLS_YES) {
+            node->right = new_node;
+        } else {
+            node->left = new_node;
+        }
     }
 
-
-    return new_node;
+    /*
+    return the head node, which restarts the game loop
+    to the head of the decision tree
+    */
+    return node->tree->head;
 }
 
 

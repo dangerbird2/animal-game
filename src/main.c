@@ -68,7 +68,6 @@ void run()
             current_node = sls_decide_response(
                 current_node,
                 res);
-
         }
 
     }
