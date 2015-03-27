@@ -46,8 +46,13 @@ void run()
     slsBool is_running = SLS_TRUE;
     while(is_running) {
         
+        if (!current_node) {
+            current_node = tree->head;
+        }
         slsResponse res = sls_ask_question(current_node);
         slsAnimalData *data = current_node->val;
+
+        sls_print_node(stderr, current_node);
 
         if (res == SLS_QUIT) {
             fprintf(stderr, "Thanks for playing!\n"); 
@@ -59,37 +64,10 @@ void run()
             if (!current_node) {
                 current_node = tree->head;
             }
+            
             current_node = sls_decide_response(
                 current_node,
                 res);
-            #if 0
-            slsBNode **next_node =
-                (res == SLS_YES)?
-                    &current_node->right:
-                    &current_node->left;
-            if (*next_node) {
-                current_node = *next_node;
-            } else {
-                slsBNode *new_next;
-                if (data->is_species) {
-                    new_next = sls_ask_new_category(current_node);
-
-                    new_next->parent = current_node->parent;
-                    current_node->parent = new_next;
-                    new_next->right = current_node;
-
-                } else {
-                    
-                    new_next = sls_ask_new_animal(current_node);
-
-                    new_next->parent = current_node;
-                    *next_node = new_next;
-                }
-                fprintf(stderr, "Thank you, let's start again\n");
-                current_node = tree->head;
-
-            }
-            #endif
 
         }
 

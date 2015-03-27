@@ -107,7 +107,16 @@ slsBNode *sls_ask_new_category(slsBNode *node);
 
 slsBNode *sls_ask_new_animal(slsBNode *node);
 
-void sls_print_node(slsBNode const *node);
+/**
+ * @brief pretty printer for nodes containing animal data
+ * @details currently prints descriptions of head, node, and children
+ * 
+ * TODO: implement ascii graphical printing function
+ * 
+ * @param stream file pointer for print output
+ * @param node node containing slsAnimalData pointer in `node->val`
+ */
+void sls_print_node(FILE *stream, slsBNode const *node);
 
 
 

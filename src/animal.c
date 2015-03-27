@@ -205,8 +205,30 @@ slsBNode *sls_ask_new_animal(slsBNode *node)
     return new_node;
 }
 
-void sls_print_node(slsBNode const *node)
+void sls_print_node(FILE *stream, slsBNode const *node)
 {
+    if (!node || !node->val) {
+
+    }
+    char const *node_desc = ((slsAnimalData*)(node->val))->description;
+    char const *parent_desc = node->parent?
+        ((slsAnimalData*)(node->parent->val))->description:
+        "no parent";
+
+    char const *left = node->left?
+        ((slsAnimalData*)(node->left->val))->description:
+        "no left child";
+    char const *right = node->right?
+        ((slsAnimalData*)(node->left->val))->description:
+        "no right child";
+
+    fprintf(stream, "parent: %s\n", parent_desc);
+    fprintf(stream, "  |\n");
+    fprintf(stream, "  V\n");
+    fprintf(stream, "node: %s\n", node_desc);
+    fprintf(stream, "  | \\\n");
+    fprintf(stream, "  V  V\n");
+    fprintf(stream, "left: %s \nright %s\n", left, right);
 
 }
 
