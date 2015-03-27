@@ -12,12 +12,6 @@ for CMPS 1600, project 2
 #include "util.h"
 #include "btree.h"
 
-/**
- * alias slsBTree
- */
-typedef slsBTree slsBTree;
-typedef slsBNode slsBNode;
-
 typedef struct slsAnimalData slsAnimalData;
 struct slsAnimalData {
     /* 
