@@ -8,8 +8,6 @@ for CMPS 1600, project 2
 #include <ctype.h>
 #include <assert.h>
 
-
-
 slsBTree *sls_animaltree_new()
 {
     slsBTree *tree = NULL;
@@ -26,8 +24,6 @@ void *sls_animal_copy(void const *data)
     slsAnimalData const *t_data = data;
     slsAnimalData *copied = NULL;
     size_t description_size = 1;
-
-    
 
     if (t_data) {
         copied = sls_animal_new(
@@ -67,6 +63,88 @@ slsAnimalData *sls_animal_new(
     }
 
     return data;
+}
+
+void sls_animal_run() 
+{
+    slsBTree *tree = NULL;
+    slsBNode *current_node = NULL;
+    /*
+    Game setup.
+    Randomly select a category and initialize the tree structure,
+    with the category represented by the head node
+    */
+    /* a list of categories to start the tree */
+    char const *categories[]={
+        "fur",
+        "no legs",
+        "skeletons",
+        "exoskeletons",
+        "wings",
+        "long noses",
+        "four legs",
+    };
+
+    const size_t n_categories = sizeof(categories)/sizeof(char*);
+
+    /*
+    setup the game tree with a randomly selected category
+    */
+    tree = sls_animaltree_new();
+    tree->head = sls_animalnode_new(
+        tree, 
+        SLS_FALSE,
+        categories[rand() % n_categories]);
+    current_node = tree->head;
+
+    if (!tree || !current_node) {
+        fprintf(stderr, "ERROR: memory failure. Game quiting");
+        fprintf(stderr, "tree %lu, node %lu\n", (size_t)tree, (size_t)current_node);
+        return;
+    }
+
+    /*
+    GAME LOOP:
+    while the is_running flag is true (not zero),
+    the game will run.
+    the loop will attempt to retrieve a valid response from the user.
+    When a valid response is given, the function sls_decide_response
+    will provide the business logic to traverse through the decision tree,
+    or ask for additional info from user to 
+    */
+    slsBool is_running = SLS_TRUE;
+    while(is_running) {
+        slsResponse res = SLS_UNDETERMINED;
+        slsAnimalData *data = NULL;
+        if (!current_node) { 
+        /* for memory safety, if current_node becomes NULL, set it to head of tree*/
+            current_node = tree->head;
+        }
+
+        res = sls_ask_question(current_node);
+        data = current_node->val;
+
+        sls_print_node(stderr, current_node);
+
+        if (res == SLS_QUIT) {
+            fprintf(stderr, "Thanks for playing!\n"); 
+            is_running = SLS_FALSE;
+
+        } else if (res == SLS_UNDETERMINED) {
+            fprintf(stderr, "Sorry, I could not read your answer\n");
+        } else {
+            if (!current_node) {
+                current_node = tree->head;
+            }
+            
+            current_node = sls_decide_response(
+                current_node,
+                res);
+        }
+
+    }
+
+    sls_btree_destroy(tree);
 }
 
 slsResponse sls_parse_response(char const *res) 
@@ -194,7 +272,7 @@ slsBNode *sls_ask_new_animal(slsBNode *node)
 
     char *line;
     fprintf(stderr, 
-        "\nwhat is your animal?:\n->");
+        "\nI give up. what is your animal?:\n->");
     line = sls_getline(stdin, SLS_MAX_INPUT_SIZE);
     new_node = sls_animalnode_new(
         node->tree, 

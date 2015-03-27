@@ -69,6 +69,13 @@ void sls_animal_free(void *data);
 
 
 /**
+ * @brief the main game loop
+ * @details begins the animal game.
+ * read comments in the source for more explanation
+ */
+void sls_animal_run();
+
+/**
  * @brief parses a user response to a yes/no question
  * @details [long description]
  * 
