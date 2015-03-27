@@ -9,7 +9,18 @@ for CMPS 1600, project 2
 #ifndef _SLS_UTIL_H_
 #define _SLS_UTIL_H_
 
+/* defines __func__ if compiler doesn't support the macro */
+#ifndef __func__
+#define __func__ "function unknown"
+#endif
+
 #include <stdio.h>
+
+/**
+ * @brief macro for determining max chars to
+ * grab from input
+ */
+#define SLS_MAX_INPUT_SIZE 200
 
 /**
  * @brief bool type enumeration
@@ -31,7 +42,6 @@ typedef enum slsResponse {
     SLS_UNDETERMINED,
     SLS_QUIT
 } slsResponse;
-
 
 
 /**

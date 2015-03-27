@@ -1,11 +1,12 @@
 extern "C" {
-    #include "../src/animal_game.h"
+    #include <animal/animal_game.h>
+
 }
 #include <gtest/gtest.h>
 
 class AnimalTests: public ::testing::Test {
 protected:
-    slsAnimalTree_t *tree = nullptr;
+    slsBTree *tree = nullptr;
 
     virtual void SetUp() {
         tree = sls_animaltree_new();

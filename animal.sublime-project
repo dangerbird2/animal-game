@@ -5,5 +5,23 @@
 			"follow_symlinks": true,
 			"path": "."
 		}
-	]
+	],
+
+    "build_systems":
+    [
+        {
+            "name": "make",
+            "cmd": ["make"],
+            "shell": "true",
+            "working_dir": "${project_path:${folder}}/build",
+            "variants": [{
+                    "name": "cmake",
+                    "cmd": ["cmake", ".."]
+                }, {
+                    "name": "test",
+                    "cmd": ["make && ./animal_tests"]
+                }
+            ]
+        }
+    ]
 }

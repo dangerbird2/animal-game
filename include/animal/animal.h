@@ -15,8 +15,8 @@ for CMPS 1600, project 2
 /**
  * alias slsBTree
  */
-typedef slsBTree slsAnimalTree_t;
-typedef slsBNode slsAnimalNode_t;
+typedef slsBTree slsBTree;
+typedef slsBNode slsBNode;
 
 typedef struct slsAnimalData slsAnimalData;
 struct slsAnimalData {
@@ -36,7 +36,7 @@ struct slsAnimalData {
  * @details [long description]
  * @return [description]
  */
-slsAnimalTree_t *sls_animaltree_new();
+slsBTree *sls_animaltree_new();
 
 /**
  * @brief [brief description]
@@ -49,12 +49,12 @@ slsAnimalTree_t *sls_animaltree_new();
  */
 slsAnimalData *sls_animal_new(
     slsBool is_species, 
-    char *description);
+    char const *description);
 
-slsAnimalNode_t *sls_animalnode_new(
-    slsAnimalTree_t *tree,
+slsBNode *sls_animalnode_new(
+    slsBTree *tree,
     slsBool is_species, 
-    char *description);
+    char const *description);
 
 /**
  * @brief [brief description]
@@ -83,7 +83,38 @@ void sls_animal_free(void *data);
  */
 slsResponse sls_parse_response(char const *res);
 
+/**
+ * @brief queries a response from the user
+ * @details uses the description and question type
+ * contained in a slsBNode
+ * 
+ * @param node [description]
+ * @return [description]
+ */
 slsResponse sls_ask_question(slsBNode *node);
+
+/**
+ * @brief returns the node child appropriate
+ * to the given response
+ * @details [long description]
+ * 
+ * @param node [description]
+ * @param res [description]
+ * 
+ * @return "left" node if res is SLS_YES, "right" node if SLS_NO
+ */
+slsBNode **sls_attempt_traversal(
+    slsBNode *node, 
+    slsResponse res);
+
+slsBNode *sls_decide_response(slsBNode *node, slsResponse res);
+
+slsBNode *sls_ask_new_category(slsBNode *node);
+
+slsBNode *sls_ask_new_animal(slsBNode *node);
+
+void sls_print_node(slsBNode const *node);
+
 
 
 #endif /* _ANIMAL_ANIMAL_H_ */

@@ -7,7 +7,8 @@ for CMPS 1600, project 2
 #include <stdlib.h>
 #include <string.h>
 
-#include "util.h"
+#include <animal/animal_game.h>
+
 
 
 char *sls_stringalloc(char const* str, size_t n)
@@ -72,3 +73,5 @@ char *sls_getline(FILE *file, size_t n)
 
     return line;
 }
+
+

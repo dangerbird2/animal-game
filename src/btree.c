@@ -2,14 +2,12 @@
 Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
 */
+#include <animal/animal_game.h>
 
-#include "btree.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifndef __func__
-#define __func__ "function unknown"
-#endif
+
 
 
 slsBTree *sls_btree_new(

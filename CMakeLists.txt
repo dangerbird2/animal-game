@@ -15,18 +15,15 @@ set(ANIMAL_HEADERS
     src/util.h
     src/animal.h)
 
-set(ANIMAL_INCLUDE_DEST ${CMAKE_BINARY_DIR}/include/)
-
 set(ANIMAL_TEST_SRC
     tests/test_run.cc
     tests/btree_test.cc
     tests/animal_test.cc)
 
-file(COPY ${ANIMAL_HEADERS}
-    DESTINATION ${ANIMAL_INCLUDE_DEST}/animal)
-
 add_subdirectory(extern/googletest)
-include_directories(extern/googletest/include ${ANIMAL_INCLUDE_DEST})
+include_directories(
+    ${CMAKE_SOURCE_DIR}/extern/googletest/include 
+    ${CMAKE_SOURCE_DIR}/include)
 
 add_library(
     animal
@@ -34,7 +31,7 @@ add_library(
 
 add_executable(
     animal_main
-    main.c)
+    src/main.c)
 target_link_libraries(
     animal_main
     animal)

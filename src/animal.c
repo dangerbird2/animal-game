@@ -3,16 +3,16 @@ Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
 */
 
-#include "animal.h"
-#include "util.h"
+#include <animal/animal_game.h>
 #include <string.h>
 #include <ctype.h>
+#include <assert.h>
 
 
 
-slsAnimalTree_t *sls_animaltree_new()
+slsBTree *sls_animaltree_new()
 {
-    slsAnimalTree_t *tree = NULL;
+    slsBTree *tree = NULL;
     tree = sls_btree_new(
         sls_animal_copy,
         sls_animal_free);
@@ -51,7 +51,7 @@ void sls_animal_free(void *data)
 
 slsAnimalData *sls_animal_new(
     slsBool is_species, 
-    char *description)
+    char const *description)
 {
     slsAnimalData *data = NULL;
     data = calloc(sizeof(slsAnimalData), 1);
@@ -107,13 +107,13 @@ slsResponse sls_parse_response(char const *res)
     return res_value;
 }
 
-slsAnimalNode_t *sls_animalnode_new(
-    slsAnimalTree_t *tree,
+slsBNode *sls_animalnode_new(
+    slsBTree *tree,
     slsBool is_species, 
-    char *description)
+    char const *description)
 {
     slsAnimalData *data;
-    slsAnimalNode_t *node;
+    slsBNode *node;
     data = sls_animal_new(is_species, description);
     node = sls_bnode_new(
         tree,
@@ -127,20 +127,19 @@ slsAnimalNode_t *sls_animalnode_new(
 
 slsResponse sls_ask_question(slsBNode *node)
 {
-    const size_t max_line = 100;
     if (!node || !node->val) {
-        return NULL;
+        return SLS_UNDETERMINED;
     }
     slsAnimalData *data = node->val;
     slsResponse res= SLS_UNDETERMINED;
     char const *prompt = data->is_species?
         "Are you thinking of a":
-        "Does your animal";
+        "Does your animal have";
     
     while (res == SLS_UNDETERMINED) {
         char *line;
         fprintf(stderr, "\n%s %s?\n->", prompt, data->description);
-        line = sls_getline(stdin, max_line);
+        line = sls_getline(stdin, SLS_MAX_INPUT_SIZE);
 
         res = sls_parse_response(line);
         if (res == SLS_UNDETERMINED) {
@@ -151,7 +150,119 @@ slsResponse sls_ask_question(slsBNode *node)
     }
     
     return res;
+}
+
+slsBNode *sls_ask_new_category(slsBNode *node)
+{
+    if (!node || !node->val || !node->tree) {
+        assert(SLS_FALSE);
+        return NULL;
+    }
+    slsAnimalData *data = node->val;
+    slsBNode *new_node = NULL;
+
+    char *line = NULL;
+    fprintf(stderr, 
+        "\nWhat does your animal have that a %s doesn't:\n->",
+        data->description);
+
+    line = sls_getline(stdin, SLS_MAX_INPUT_SIZE);
+
+    if (!line) {
+        assert(SLS_FALSE);
+        return NULL;
+    }
+    new_node = sls_animalnode_new(
+        node->tree, 
+        SLS_FALSE,
+        line);
+
+    free(line);
+
+    return new_node;
+}
+
+slsBNode *sls_ask_new_animal(slsBNode *node)
+{
+
+    if (!node || !node->val || !node->tree) {
+        assert(0);
+        return NULL;
+    }
+    slsAnimalData *data = node->val;
+    slsBNode *new_node = NULL;
+
+    char *line;
+    fprintf(stderr, 
+        "\nwhat is your animal?:\n->");
+    line = sls_getline(stdin, SLS_MAX_INPUT_SIZE);
+    new_node = sls_animalnode_new(
+        node->tree, 
+        SLS_TRUE,
+        line);
+    free(line);
+
+    return new_node;
+}
+
+void sls_print_node(slsBNode const *node)
+{
 
 }
+
+slsBNode **sls_attempt_traversal(
+    slsBNode *node, 
+    slsResponse res)
+{
+    slsBNode **child_ptr = (res == SLS_YES)?
+        &(node->right):
+        &(node->left);
+
+    return child_ptr;
+}
+
+slsBNode *sls_decide_response(
+    slsBNode *node, 
+    slsResponse res)
+{
+    if (!node || !node->val || !node->tree) {
+        assert(0);
+        return NULL;
+    }
+    slsAnimalData *data = node->val;
+    slsBNode *new_node = *sls_attempt_traversal(node, res);
+    if (new_node) {
+        char const *dirrection = (new_node == node->left)?
+            "left": "right";
+
+        fprintf(stderr, "moving to the %s node\n", dirrection);
+        return new_node;
+    }
+
+    
+
+    if (res == SLS_YES && data->is_species) {
+        fprintf(stderr, "I guessed your animal!\nLet's play again\n");
+        new_node = node->tree->head;
+    } else if (res == SLS_NO && data->is_species) {
+        fprintf(stderr, "I guessed wrong.\n");
+        new_node = sls_ask_new_category(node);
+        slsBNode *parent = node->parent;
+        node->parent = new_node;
+        new_node->parent = parent;
+
+        if (parent->left == node) {
+            parent->left = new_node;
+        } else {
+            parent->right = new_node;
+        }
+    } else {
+        
+    }
+
+
+    return new_node;
+}
+
 
 
