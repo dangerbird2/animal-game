@@ -23,7 +23,12 @@ void *sls_animal_copy(void const *data)
 {
     slsAnimalData const *t_data = data;
     slsAnimalData *copied = NULL;
-    size_t description_size = 1;
+    if (!t_data || !t_data->description) {
+        fprintf(stderr, "ERROR %s %i:\n\tdata or description fields are NULL\n", 
+            __FILE__,
+            __LINE__);
+        return NULL;
+    }
 
     if (t_data) {
         copied = sls_animal_new(
@@ -63,6 +68,25 @@ slsAnimalData *sls_animal_new(
     }
 
     return data;
+}
+
+slsBNode *sls_animalnode_new(
+    slsBTree *tree,
+    slsBool is_species, 
+    char const *description)
+{
+    slsAnimalData *data;
+    slsBNode *node;
+    data = sls_animal_new(is_species, description);
+    assert(data);
+    node = sls_bnode_new(
+        tree,
+        data,
+        NULL,
+        NULL);
+
+    sls_animal_free(data);
+    return node;
 }
 
 void sls_animal_run() 
@@ -183,24 +207,6 @@ slsResponse sls_parse_response(char const *res)
     return res_value;
 }
 
-slsBNode *sls_animalnode_new(
-    slsBTree *tree,
-    slsBool is_species, 
-    char const *description)
-{
-    slsAnimalData *data;
-    slsBNode *node;
-    data = sls_animal_new(is_species, description);
-    node = sls_bnode_new(
-        tree,
-        data,
-        NULL,
-        NULL);
-
-    sls_animal_free(data);
-    return node;
-}
-
 slsResponse sls_ask_question(slsBNode *node)
 {
     if (!node || !node->val) {
@@ -263,9 +269,9 @@ slsBNode *sls_ask_new_animal(slsBNode *node)
 
     if (!node || !node->val || !node->tree) {
         assert(0);
+        fprintf(stderr, "ERROR %s: node or one of its fields are NULL\n", __func__);
         return NULL;
     }
-    slsAnimalData *data = node->val;
     slsBNode *new_node = NULL;
 
     char *line;
