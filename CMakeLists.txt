@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(animal)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c90")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
 set(ANIMAL_SRC
@@ -18,7 +18,8 @@ set(ANIMAL_HEADERS
 set(ANIMAL_TEST_SRC
     tests/test_run.cc
     tests/btree_test.cc
-    tests/animal_test.cc)
+    tests/animal_test.cc
+    tests/game_test.cc)
 
 add_subdirectory(extern/googletest)
 include_directories(

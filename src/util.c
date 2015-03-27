@@ -35,7 +35,6 @@ char *sls_stringalloc(char const* str, size_t n)
 char *sls_getline(FILE *file, size_t n)
 {
     char *line = NULL;
-    size_t len = 0;
     size_t i =0;
     size_t alloced_size = 16;
     line = calloc(sizeof(char), alloced_size);

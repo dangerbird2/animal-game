@@ -1,7 +1,4 @@
-extern "C" {
-    #include <animal/animal_game.h>
-
-}
+#include <animal/animal_game.h>
 #include <gtest/gtest.h>
 
 class AnimalTests: public ::testing::Test {
