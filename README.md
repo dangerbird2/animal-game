@@ -13,7 +13,7 @@ C/C++ compiler, git, and cmake. Git can fetch the googletest as
 a submodule, which cmake will compile along with the project itself
 
 to build the project:
-```
+```bash
 #clone project
 git clone https://github.com/dangerbird2/animal-game.git animal-game
 cd animal-game

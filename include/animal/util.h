@@ -9,7 +9,9 @@ for CMPS 1600, project 2
 #ifndef _SLS_UTIL_H_
 #define _SLS_UTIL_H_
 
-/* defines __func__ if compiler doesn't support the macro */
+/**
+@brief defines `__func__` if compiler doesn't support the macro 
+*/
 #ifndef __func__
 #define __func__ "function unknown"
 #endif
