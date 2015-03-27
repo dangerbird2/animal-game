@@ -252,9 +252,6 @@ for CMPS 1600, project 2
 #ifndef _ANIMAL_ANIMAL_H_
 #define _ANIMAL_ANIMAL_H_
 
-#include "util.h"
-#include "btree.h"
-
 typedef struct slsAnimalData slsAnimalData;
 struct slsAnimalData {
     /* 
@@ -564,7 +561,7 @@ animal.c
 Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
 */
-f
+
 
 slsBTree *sls_animaltree_new()
 {
@@ -673,14 +670,12 @@ void sls_animal_run()
     slsBool is_running = SLS_TRUE;
     while(is_running) {
         slsResponse res = SLS_UNDETERMINED;
-        slsAnimalData *data = NULL;
         if (!current_node) { 
         /* for memory safety, if current_node becomes NULL, set it to head of tree*/
             current_node = tree->head;
         }
 
         res = sls_ask_question(current_node);
-        data = current_node->val;
 
         sls_print_node(stderr, current_node);
 

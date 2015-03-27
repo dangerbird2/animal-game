@@ -115,14 +115,12 @@ void sls_animal_run()
     slsBool is_running = SLS_TRUE;
     while(is_running) {
         slsResponse res = SLS_UNDETERMINED;
-        slsAnimalData *data = NULL;
         if (!current_node) { 
         /* for memory safety, if current_node becomes NULL, set it to head of tree*/
             current_node = tree->head;
         }
 
         res = sls_ask_question(current_node);
-        data = current_node->val;
 
         sls_print_node(stderr, current_node);
 

@@ -1,3 +1,4 @@
+## dockerfile for using linux's valgrind for memory debugging
 FROM debian:latest
 
 RUN apt-get update \
