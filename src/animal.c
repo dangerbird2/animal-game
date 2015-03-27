@@ -301,7 +301,7 @@ void sls_print_node(FILE *stream, slsBNode const *node)
         ((slsAnimalData*)(node->left->val))->description:
         "no left child";
     char const *right = node->right?
-        ((slsAnimalData*)(node->left->val))->description:
+        ((slsAnimalData*)(node->right->val))->description:
         "no right child";
 
     fprintf(stream, "parent: %s\n", parent_desc);
