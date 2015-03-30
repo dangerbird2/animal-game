@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Animal-game : animal game for Tulane CMPS 1600">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Animal-game</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/dangerbird2/animal-game">View on GitHub</a>
+
+          <h1 id="project_title">Animal-game</h1>
+          <h2 id="project_tagline">animal game for Tulane CMPS 1600</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/dangerbird2/animal-game/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/dangerbird2/animal-game/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="animal-game-for-tulane-cmps-1600" class="anchor" href="#animal-game-for-tulane-cmps-1600" aria-hidden="true"><span class="octicon octicon-link"></span></a>animal game for Tulane CMPS 1600</h1>
+
+<p>Author: Steven Shea <a href="mailto:stevenlsjr@gmail.com">stevenlsjr@gmail.com</a></p>
+
+<h2>
+<a id="compiling-instructions" class="anchor" href="#compiling-instructions" aria-hidden="true"><span class="octicon octicon-link"></span></a>compiling instructions:</h2>
+
+<p>The final project will be con</p>
+
+<p>this project has no preexisting dependencies aside from a modern 
+C/C++ compiler, git, and cmake. Git can fetch the googletest as
+a submodule, which cmake will compile along with the project itself</p>
+
+<p>to build the project:</p>
+
+<pre><code>#clone project
+git clone https://github.com/dangerbird2/animal-game.git animal-game
+cd animal-game
+
+# download submodules
+git submodule init
+git submodule update
+
+#create cmake build directory
+mkdir build &amp;&amp; cd build
+
+#build with cmake
+cmake ..
+make
+
+</code></pre>
+
+<p>to build documentation:</p>
+
+<pre><code>doxygen ./doxyfile.in
+# open docs/html/index.html in browser
+</code></pre>
+
+<h2>
+<a id="animal-game-algorithm-pseudocode" class="anchor" href="#animal-game-algorithm-pseudocode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Animal game algorithm pseudocode:</h2>
+
+<ul>
+<li>Store node data as a struct with two fields -- a boolean field indicating whether the node
+represents a specific species or a descriptor(eg. does it quack, is it green, etc.). The second field is the node's name
+
+<ul>
+<li>nodes that are species must be leaf nodes.</li>
+</ul>
+</li>
+<li>Begin by calling a <code>ask_user</code> routine on the head node</li>
+<li>subroutine <code>ask_user(node)</code>:
+
+<ul>
+<li>ask "are you thinking of a [node description]?"</li>
+<li>if node is a branch
+
+<ul>
+<li>if user responds "yes", call ask_user on left node</li>
+<li>else, call <code>ask_user</code> on right node</li>
+</ul>
+</li>
+<li>if node is a leaf
+
+<ul>
+<li>if user responds "yes", end game</li>
+<li>else, call <code>expand_node</code> on node</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>subroutine <code>expand_node(node)</code>
+
+<ul>
+<li>create a new descriptor node (descriptor can be chosen randomly from list)</li>
+<li>
+</li>
+</ul>
+</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Animal-game maintained by <a href="https://github.com/dangerbird2">dangerbird2</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
