@@ -6,8 +6,6 @@ Author: Steven Shea <stevenlsjr@gmail.com>
 compiling instructions:
 ----
 
-The final project will be con
-
 this project has no preexisting dependencies aside from a modern 
 C/C++ compiler, git, and cmake. Git can fetch the googletest as
 a submodule, which cmake will compile along with the project itself
@@ -37,6 +35,8 @@ doxygen ./doxyfile.in
 # open docs/html/index.html in browser
 ```
 
+* [Documentation](http://dangerbird2.github.io/animal-game/docs/html/)
+
 Animal game algorithm pseudocode:
 ---
 
@@ -46,13 +46,19 @@ represents a specific species or a descriptor(eg. does it quack, is it green, et
 * Begin by calling a `ask_user` routine on the head node
 * subroutine `ask_user(node)`:
     * ask "are you thinking of a [node description]?"
-    * if node is a branch
-        * if user responds "yes", call ask_user on left node
-        * else, call `ask_user` on right node
-    * if node is a leaf
-        * if user responds "yes", end game
-        * else, call `expand_node` on node
-* subroutine `expand_node(node)`
-    * create a new descriptor node (descriptor can be chosen randomly from list)
-    * 
+    * if node is a leaf and user responds "yes", end game
+    * else, call `traverse-node` on node and response and
+    set current node to returned value
+
+* subroutine `traverse-node`
+    * match response YES with right node, NO with left node
+    * if matching node is non-null, return matching node
+    * else, if node is a category(branch), ask user for the
+    animal the user is thinking of, and attach new node with
+    user's animal to matching node
+    * else, if node is an animal(leaf) ask what differentiates
+    user's animal from given animal. replace animal node
+    with new category node, and place the old animal node with the
+    *non-matching* node.
+    * return tree's head node (starting process over)
 
