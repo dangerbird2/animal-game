@@ -93,6 +93,7 @@ void sls_animal_run()
 {
     slsBTree *tree = NULL;
     slsBNode *current_node = NULL;
+    FILE *stream = stdin;
     /*
     Game setup.
     Randomly select a category and initialize the tree structure,
@@ -144,9 +145,9 @@ void sls_animal_run()
             current_node = tree->head;
         }
 
-        res = sls_ask_question(current_node);
+        res = sls_ask_question(stream, current_node);
 
-        sls_print_node(stderr, current_node);
+        sls_animalnode_print_node(stderr, current_node);
 
         if (res == SLS_QUIT) {
             fprintf(stderr, "Thanks for playing!\n"); 
@@ -160,6 +161,7 @@ void sls_animal_run()
             }
             
             current_node = sls_decide_response(
+                stream,
                 current_node,
                 res);
         }
@@ -211,7 +213,8 @@ slsResponse sls_ask_question(
     FILE *stream, 
     slsBNode *node)
 {
-    if (!node || !node->val) {
+    assert(stream);
+    if (!node || !node->val || !stream) {
         return SLS_UNDETERMINED;
     }
     slsAnimalData *data = node->val;
@@ -240,6 +243,7 @@ slsBNode *sls_ask_new_category(
     FILE *stream, 
     slsBNode *node)
 {
+    assert(stream);
     if (!node || !node->val || !node->tree) {
         assert(SLS_FALSE);
         return NULL;
@@ -258,6 +262,7 @@ slsBNode *sls_ask_new_category(
         assert(SLS_FALSE);
         return NULL;
     }
+
     new_node = sls_animalnode_new(
         node->tree, 
         SLS_FALSE,
@@ -272,18 +277,19 @@ slsBNode *sls_ask_new_animal(
     FILE *stream, 
     slsBNode *node)
 {
+    assert(stream);
 
     if (!node || !node->val || !node->tree) {
-        assert(0);
+        assert(SLS_FALSE);
         fprintf(stderr, "ERROR %s: node or one of its fields are NULL\n", __func__);
         return NULL;
     }
     slsBNode *new_node = NULL;
 
     char *line;
-    fprintf(stream, 
+    fprintf(stderr, 
         "\nI give up. what is your animal?:\n->");
-    line = sls_getline(stdin, SLS_MAX_INPUT_SIZE);
+    line = sls_getline(stream, SLS_MAX_INPUT_SIZE);
     new_node = sls_animalnode_new(
         node->tree, 
         SLS_TRUE,
@@ -293,30 +299,92 @@ slsBNode *sls_ask_new_animal(
     return new_node;
 }
 
-void sls_print_node(FILE *stream, slsBNode const *node)
+slsBool sls_animalnode_get_isspecies(
+    slsBNode const  *node)
 {
     if (!node || !node->val) {
+        assert(SLS_FALSE);
+        return SLS_FALSE;
+    }
+    return ((slsAnimalData*)(node->val))->is_species;
+}
+
+char const *sls_animalnode_get_description(
+    slsBNode const *node)
+{
+    char const *desc;
+    if (!node) {
+        desc = NULL;
+    } else {
+        desc = ((slsAnimalData*)(node->val))->description;
+    }
+    return desc;
+}
+
+void sls_animalnode_store_child_descriptions(
+    slsBNode const *node,
+    char const** left_desc,
+    char const** right_desc)
+{
+    if (!node) {
+        *left_desc = NULL;
+        *right_desc = NULL;
         return;
     }
-    char const *node_desc = ((slsAnimalData*)(node->val))->description;
-    char const *parent_desc = node->parent?
-        ((slsAnimalData*)(node->parent->val))->description:
-        "no parent";
+    *left_desc = (node->left)?
+        sls_animalnode_get_description(node->left):
+        NULL;
+    *right_desc = (node->right)?
+        sls_animalnode_get_description(node->right):
+        NULL;
+}
 
-    char const *left = node->left?
-        ((slsAnimalData*)(node->left->val))->description:
-        "no left child";
-    char const *right = node->right?
-        ((slsAnimalData*)(node->right->val))->description:
-        "no right child";
+void sls_animalnode_print_node(FILE *stream, slsBNode const *node)
+{
+    if (!node) {
+        assert(SLS_FALSE);
+        return;
+    }
+    char const *left_left;
+    char const *left;
+    char const *left_right;
+    char const *node_desc;
+    char const *right_left;
+    char const *right;
+    char const *right_right;
 
-    fprintf(stream, "parent: %s\n", parent_desc);
-    fprintf(stream, "  |\n");
-    fprintf(stream, "  V\n");
-    fprintf(stream, "node: %s\n", node_desc);
-    fprintf(stream, "  | \\\n");
-    fprintf(stream, "  V  V\n");
-    fprintf(stream, "left: %s \nright %s\n", left, right);
+    node_desc = sls_animalnode_get_description(node);
+    sls_animalnode_store_child_descriptions(node, &left, &right);
+    sls_animalnode_store_child_descriptions(node->left, &left_left, &left_right);
+    sls_animalnode_store_child_descriptions(node->right, &right_left, &right_right);
+
+    /* make sure all strings are non-null */
+    left_left =     left_left?      left_left: "no node";
+    left =          left?           left: "no node";
+    left_right =    left_right? left_right: "no node";
+    node_desc =     node_desc?      node_desc: "no node";
+    right_left =    right_left?     right_left: "no node";
+    right =         right?          right: "no node";
+    right_right =   right_right?    right_right: "no node";
+
+    fprintf(stderr, "    n--%s\n", left_left);
+    fprintf(stderr, "    |\n");
+    fprintf(stderr, "n--%s\n", left);
+    fprintf(stderr, "|   |\n");
+    fprintf(stderr, "|   y--%s\n", left_right);
+    fprintf(stderr, "|\n");
+    fprintf(stderr, "|\n");
+    fprintf(stderr, "%s\n", node_desc);
+    fprintf(stderr, "|\n");
+    fprintf(stderr, "|\n");
+    fprintf(stderr, "|   n--%s\n", right_left);
+    fprintf(stderr, "|   |\n");
+    fprintf(stderr, "y--%s\n", right);
+    fprintf(stderr, "    |\n");
+    fprintf(stderr, "    y--%s\n", right_right);
+ 
+
+
 
 }
 
@@ -324,6 +392,10 @@ slsBNode **sls_attempt_traversal(
     slsBNode *node, 
     slsResponse res)
 {
+    if (!node) {
+        assert(SLS_FALSE);
+        return NULL;
+    }
     slsBNode **child_ptr = (res == SLS_YES)?
         &(node->right):
         &(node->left);
@@ -340,6 +412,7 @@ slsBNode *sls_decide_response(
     TODO: simplify this logic
     it works right now, but it's pretty damn confusing
     */
+    assert(stream);
     if (!node || !node->val || !node->tree) {
         assert(0);
         return NULL;

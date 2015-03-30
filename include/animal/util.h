@@ -68,5 +68,19 @@ char *sls_stringalloc(char const *str, size_t n);
  */
 char *sls_getline(FILE *file, size_t n);
 
+/**
+ * @brief implementation of strncmp which disregards case
+ * @details [long description]
+ * 
+ * @param a first string
+ * @param b second string
+ * 
+ * @return (from http://www.cplusplus.com/reference/cstring/strncmp/)
+ *  <0   the first character that does not match has a lower value in str1 than in str2
+ *   0   the contents of both strings are equal
+ *   >0  the first character that does not match has a greater value in str1 than in str2
+ */
+int sls_strncmp_nocase(char const *a, char const *b, size_t size);
+
 
 #endif /* _SLS_UTIL_H_ */

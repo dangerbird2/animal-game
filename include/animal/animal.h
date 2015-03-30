@@ -51,6 +51,24 @@ slsBNode *sls_animalnode_new(
     char const *description);
 
 /**
+ * @brief retrieve is_species from animalnode
+ * 
+ * @param node slsBNode containing slsAnimalData pointer
+ * @return SLS_TRUE if node contains a species
+ */
+slsBool sls_animalnode_get_isspecies(
+    slsBNode const  *node);
+
+/**
+ * @brief retrieve description from animalnode
+ * 
+ * @param node slsBNode containing slsAnimalData pointer
+ * @return animal data description
+ */
+char const *sls_animalnode_get_description(
+    slsBNode const  *node);
+
+/**
  * @brief [brief description]
  * @details [long description]
  * 
@@ -106,12 +124,12 @@ slsResponse sls_ask_question(FILE *stream, slsBNode *node);
  * @return "left" node if res is SLS_YES, "right" node if SLS_NO
  */
 slsBNode **sls_attempt_traversal(
-    FILE *stream,
+    slsBNode *node, 
     slsResponse res);
 
 
 slsBNode *sls_decide_response(
-    FILE *stream, 
+    FILE *stream,
     slsBNode *node, 
     slsResponse res);
 
@@ -139,6 +157,9 @@ slsBNode *sls_ask_new_category(FILE *stream, slsBNode *node);
  */
 slsBNode *sls_ask_new_animal(FILE *stream, slsBNode *node);
 
+
+
+
 /**
  * @brief pretty printer for nodes containing animal data
  * @details currently prints descriptions of head, node, and children
@@ -148,7 +169,7 @@ slsBNode *sls_ask_new_animal(FILE *stream, slsBNode *node);
  * @param stream file pointer for print output
  * @param node node containing slsAnimalData pointer in `node->val`
  */
-void sls_print_node(FILE *stream, slsBNode const *node);
+void sls_animalnode_print_node(FILE *stream, slsBNode const *node);
 
 
 

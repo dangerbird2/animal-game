@@ -74,4 +74,8 @@ char *sls_getline(FILE *file, size_t n)
     return line;
 }
 
+int sls_strncmp_nocase(char const *a, char const *b, size_t size)
+{
+    return 0;
+}
 
