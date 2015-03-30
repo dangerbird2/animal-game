@@ -174,7 +174,7 @@ slsResponse sls_parse_response(char const *res)
     char const *ptr = res;
     const size_t len = strlen(res);
     slsResponse res_value;
-    int i;
+    size_t i;
 
     /* search for first alphabetical value */
     for (i=0; i<len; ++i) {
@@ -207,7 +207,9 @@ slsResponse sls_parse_response(char const *res)
     return res_value;
 }
 
-slsResponse sls_ask_question(slsBNode *node)
+slsResponse sls_ask_question(
+    FILE *stream, 
+    slsBNode *node)
 {
     if (!node || !node->val) {
         return SLS_UNDETERMINED;
@@ -234,7 +236,9 @@ slsResponse sls_ask_question(slsBNode *node)
     return res;
 }
 
-slsBNode *sls_ask_new_category(slsBNode *node)
+slsBNode *sls_ask_new_category(
+    FILE *stream, 
+    slsBNode *node)
 {
     if (!node || !node->val || !node->tree) {
         assert(SLS_FALSE);
@@ -248,7 +252,7 @@ slsBNode *sls_ask_new_category(slsBNode *node)
         "\nWhat does your animal have that a %s doesn't:\n->",
         data->description);
 
-    line = sls_getline(stdin, SLS_MAX_INPUT_SIZE);
+    line = sls_getline(stream, SLS_MAX_INPUT_SIZE);
 
     if (!line) {
         assert(SLS_FALSE);
@@ -264,7 +268,9 @@ slsBNode *sls_ask_new_category(slsBNode *node)
     return new_node;
 }
 
-slsBNode *sls_ask_new_animal(slsBNode *node)
+slsBNode *sls_ask_new_animal(
+    FILE *stream, 
+    slsBNode *node)
 {
 
     if (!node || !node->val || !node->tree) {
@@ -275,7 +281,7 @@ slsBNode *sls_ask_new_animal(slsBNode *node)
     slsBNode *new_node = NULL;
 
     char *line;
-    fprintf(stderr, 
+    fprintf(stream, 
         "\nI give up. what is your animal?:\n->");
     line = sls_getline(stdin, SLS_MAX_INPUT_SIZE);
     new_node = sls_animalnode_new(
@@ -326,6 +332,7 @@ slsBNode **sls_attempt_traversal(
 }
 
 slsBNode *sls_decide_response(
+    FILE *stream,
     slsBNode *node, 
     slsResponse res)
 {
@@ -368,7 +375,7 @@ slsBNode *sls_decide_response(
         animal and the animal currently given
         */
         fprintf(stderr, "I guessed wrong.\n");
-        new_node = sls_ask_new_category(node);
+        new_node = sls_ask_new_category(stream, node);
         slsBNode *parent = node->parent;
         node->parent = new_node;
         new_node->parent = parent;
@@ -387,7 +394,7 @@ slsBNode *sls_decide_response(
         It will ask the user for the animal he/she was thinking about,
         
         */
-        new_node = sls_ask_new_animal(node);
+        new_node = sls_ask_new_animal(stream, node);
         new_node->parent = node;
         if (res == SLS_YES) {
             node->right = new_node;

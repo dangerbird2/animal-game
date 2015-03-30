@@ -18,7 +18,7 @@ char *sls_stringalloc(char const* str, size_t n)
     new_str = calloc(sizeof(char), n + 1);
     if (new_str && str) {
         new_str[0] = '\0';
-        int i =0;
+        size_t i =0;
         for (i=0; i<n; ++i) {
             new_str[i] = str[i];
 

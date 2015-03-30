@@ -89,30 +89,55 @@ slsResponse sls_parse_response(char const *res);
  * @details uses the description and question type
  * contained in a slsBNode
  * 
+ * @param stream input stream
  * @param node [description]
  * @return [description]
  */
-slsResponse sls_ask_question(slsBNode *node);
+slsResponse sls_ask_question(FILE *stream, slsBNode *node);
 
 /**
  * @brief returns the node child appropriate
  * to the given response
  * @details [long description]
  * 
- * @param node [description]
- * @param res [description]
+ * @param node pointer to current animalData node
+ * @param res user's response
  * 
  * @return "left" node if res is SLS_YES, "right" node if SLS_NO
  */
 slsBNode **sls_attempt_traversal(
+    FILE *stream,
+    slsResponse res);
+
+
+slsBNode *sls_decide_response(
+    FILE *stream, 
     slsBNode *node, 
     slsResponse res);
 
-slsBNode *sls_decide_response(slsBNode *node, slsResponse res);
+/**
+ * @brief asks user for new category, 
+ * @details and
+ * inserts category node in front of given node
+ * 
+ * @param stream input stream
+ * @param node animal node
+ * 
+ * @return [description]
+ */
+slsBNode *sls_ask_new_category(FILE *stream, slsBNode *node);
 
-slsBNode *sls_ask_new_category(slsBNode *node);
-
-slsBNode *sls_ask_new_animal(slsBNode *node);
+/**
+ * @brief asks user for new category, 
+ * @details and
+ * inserts category node in front of given node
+ * 
+ * @param stream input stream
+ * @param node category node
+ * 
+ * @return [description]
+ */
+slsBNode *sls_ask_new_animal(FILE *stream, slsBNode *node);
 
 /**
  * @brief pretty printer for nodes containing animal data
