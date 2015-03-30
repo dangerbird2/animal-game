@@ -25,16 +25,13 @@ struct slsAnimalData {
     char *description;
 };
 
-/**
- * @brief [brief description]
- * @details [long description]
- * @return [description]
- */
-slsBTree *sls_animaltree_new();
+/******************
+* ANIMAL DATA FUNCTIONS
+*******************/
 
 /**
- * @brief [brief description]
- * @details [long description]
+ * @brief create animal data structure
+ * @details destroy with sls_animal_free
  * 
  * @param is_species [description]
  * @param description [description]
@@ -45,6 +42,43 @@ slsAnimalData *sls_animal_new(
     slsBool is_species, 
     char const *description);
 
+/**
+ * @brief [brief description]
+ * @details [long description]
+ * 
+ * @param data [description]
+ * @return [description]
+ */
+void *sls_animal_copy(void const *data);
+
+/**
+ * @brief free animal data
+ * @details [long description]
+ * 
+ * @param data [description]
+ */
+void sls_animal_free(void *data);
+
+/******************
+* ANIMAL BINARY NODE MANIPULATION
+*******************/
+
+/**
+ * @brief [brief description]
+ * @details [long description]
+ * @return [description]
+ */
+slsBTree *sls_animaltree_new();
+
+/**
+ * @brief create a new animal slsBNode
+ * @details [long description]
+ * 
+ * @param tree [description]
+ * @param is_species [description]
+ * @param description [description]
+ * @return [description]
+ */
 slsBNode *sls_animalnode_new(
     slsBTree *tree,
     slsBool is_species, 
@@ -59,6 +93,12 @@ slsBNode *sls_animalnode_new(
 slsBool sls_animalnode_get_isspecies(
     slsBNode const  *node);
 
+
+void sls_animalnode_store_child_descriptions(
+    slsBNode const *node,
+    char const** left_desc,
+    char const** right_desc)
+
 /**
  * @brief retrieve description from animalnode
  * 
@@ -69,22 +109,21 @@ char const *sls_animalnode_get_description(
     slsBNode const  *node);
 
 /**
- * @brief [brief description]
- * @details [long description]
+ * @brief pretty printer for nodes containing animal data
+ * @details currently prints descriptions of head, node, and children
  * 
- * @param data [description]
- * @return [description]
- */
-void *sls_animal_copy(void const *data);
-
-/**
- * @brief [brief description]
- * @details [long description]
+ * TODO: implement ascii graphical printing function
  * 
- * @param data [description]
+ * @param stream file pointer for print output
+ * @param node node containing slsAnimalData pointer in `node->val`
  */
-void sls_animal_free(void *data);
+void sls_animalnode_print_node(FILE *stream, slsBNode const *node);
 
+
+
+/******************
+* ANIMAL GAME LOGIC
+*******************/
 
 /**
  * @brief the main game loop
@@ -128,10 +167,21 @@ slsBNode **sls_attempt_traversal(
     slsResponse res);
 
 
+/**
+ * @brief traverse to next node
+ * @details asks user for needed information
+ * 
+ * @param stream input stream
+ * @param node animal node
+ * @param res user node
+ * @return node pointer indicating the next
+ * node to traverse
+ */
 slsBNode *sls_decide_response(
     FILE *stream,
     slsBNode *node, 
     slsResponse res);
+
 
 /**
  * @brief asks user for new category, 
@@ -156,20 +206,6 @@ slsBNode *sls_ask_new_category(FILE *stream, slsBNode *node);
  * @return [description]
  */
 slsBNode *sls_ask_new_animal(FILE *stream, slsBNode *node);
-
-
-
-
-/**
- * @brief pretty printer for nodes containing animal data
- * @details currently prints descriptions of head, node, and children
- * 
- * TODO: implement ascii graphical printing function
- * 
- * @param stream file pointer for print output
- * @param node node containing slsAnimalData pointer in `node->val`
- */
-void sls_animalnode_print_node(FILE *stream, slsBNode const *node);
 
 
 

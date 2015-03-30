@@ -15,7 +15,6 @@ slsBTree *sls_animaltree_new()
         sls_animal_copy,
         sls_animal_free);
 
-
     return tree;
 }
 
@@ -24,7 +23,8 @@ void *sls_animal_copy(void const *data)
     slsAnimalData const *t_data = data;
     slsAnimalData *copied = NULL;
     if (!t_data || !t_data->description) {
-        fprintf(stderr, "ERROR %s %i:\n\tdata or description fields are NULL\n", 
+        fprintf(stderr, 
+            "ERROR %s %i:\n\tdata or description fields are NULL\n", 
             __FILE__,
             __LINE__);
         return NULL;
@@ -345,6 +345,9 @@ void sls_animalnode_print_node(FILE *stream, slsBNode const *node)
         assert(SLS_FALSE);
         return;
     }
+    /*
+    declare char pointers for descriptions.
+    */
     char const *left_left;
     char const *left;
     char const *left_right;
@@ -353,6 +356,8 @@ void sls_animalnode_print_node(FILE *stream, slsBNode const *node)
     char const *right;
     char const *right_right;
 
+    /* set strings to node descriptiosn
+    (if node doesn't exist, pointer will be set to NULL)*/
     node_desc = sls_animalnode_get_description(node);
     sls_animalnode_store_child_descriptions(node, &left, &right);
     sls_animalnode_store_child_descriptions(node->left, &left_left, &left_right);
@@ -367,6 +372,7 @@ void sls_animalnode_print_node(FILE *stream, slsBNode const *node)
     right =         right?          right: "no node";
     right_right =   right_right?    right_right: "no node";
 
+    /* print da string */
     fprintf(stderr, "    n--%s\n", left_left);
     fprintf(stderr, "    |\n");
     fprintf(stderr, "n--%s\n", left);
@@ -382,10 +388,6 @@ void sls_animalnode_print_node(FILE *stream, slsBNode const *node)
     fprintf(stderr, "y--%s\n", right);
     fprintf(stderr, "    |\n");
     fprintf(stderr, "    y--%s\n", right_right);
- 
-
-
-
 }
 
 slsBNode **sls_attempt_traversal(
