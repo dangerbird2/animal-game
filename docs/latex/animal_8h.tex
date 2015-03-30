@@ -1,0 +1,239 @@
+\hypertarget{animal_8h}{\section{include/animal/animal.h File Reference}
+\label{animal_8h}\index{include/animal/animal.\+h@{include/animal/animal.\+h}}
+}
+
+
+implementation of animal game  
+
+
+{\ttfamily \#include \char`\"{}util.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}btree.\+h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structsls_animal_data}{sls\+Animal\+Data}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{animal_8h_a457e2eb78a4e3f655a83fb4f868294cc}{typedef struct \hyperlink{structsls_animal_data}{sls\+Animal\+Data} {\bfseries sls\+Animal\+Data}}\label{animal_8h_a457e2eb78a4e3f655a83fb4f868294cc}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsls_b_tree}{sls\+B\+Tree} $\ast$ \hyperlink{animal_8h_a7d99c4d67e4a4e159127e6d87f8d960d}{sls\+\_\+animaltree\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}brief description\mbox{]} \end{DoxyCompactList}\item 
+\hyperlink{structsls_animal_data}{sls\+Animal\+Data} $\ast$ \hyperlink{animal_8h_ab8fbd6bf6c7d1d805738e44f76966baf}{sls\+\_\+animal\+\_\+new} (\hyperlink{util_8h_a12d638c95aa5b7ad5241c1425471dad2}{sls\+Bool} is\+\_\+species, char const $\ast$description)
+\begin{DoxyCompactList}\small\item\em \mbox{[}brief description\mbox{]} \end{DoxyCompactList}\item 
+\hypertarget{animal_8h_aff3365d6f76e5479ff48fa4d44fd9124}{\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$ {\bfseries sls\+\_\+animalnode\+\_\+new} (\hyperlink{structsls_b_tree}{sls\+B\+Tree} $\ast$tree, \hyperlink{util_8h_a12d638c95aa5b7ad5241c1425471dad2}{sls\+Bool} is\+\_\+species, char const $\ast$description)}\label{animal_8h_aff3365d6f76e5479ff48fa4d44fd9124}
+
+\item 
+void $\ast$ \hyperlink{animal_8h_a2b0ed6d68ed0330eeec1563b7d619db6}{sls\+\_\+animal\+\_\+copy} (void const $\ast$data)
+\begin{DoxyCompactList}\small\item\em \mbox{[}brief description\mbox{]} \end{DoxyCompactList}\item 
+void \hyperlink{animal_8h_a7ed58297902d6ec775af0ebb220fa597}{sls\+\_\+animal\+\_\+free} (void $\ast$data)
+\begin{DoxyCompactList}\small\item\em \mbox{[}brief description\mbox{]} \end{DoxyCompactList}\item 
+void \hyperlink{animal_8h_aa8c45a2149497dc01b14251ae5fc8507}{sls\+\_\+animal\+\_\+run} ()
+\begin{DoxyCompactList}\small\item\em the main game loop \end{DoxyCompactList}\item 
+\hyperlink{util_8h_ae4aaad8f54c6d696b6d2f031e4154185}{sls\+Response} \hyperlink{animal_8h_a6a14fc93061e3fadc618ce66ba394cae}{sls\+\_\+parse\+\_\+response} (char const $\ast$res)
+\begin{DoxyCompactList}\small\item\em parses a user response to a yes/no question \end{DoxyCompactList}\item 
+\hyperlink{util_8h_ae4aaad8f54c6d696b6d2f031e4154185}{sls\+Response} \hyperlink{animal_8h_ab892febaa7660a788e704855bc4646b8}{sls\+\_\+ask\+\_\+question} (\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$node)
+\begin{DoxyCompactList}\small\item\em queries a response from the user \end{DoxyCompactList}\item 
+\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$$\ast$ \hyperlink{animal_8h_a3f7c6abc7f569fb9f4b0c67792e5c7f6}{sls\+\_\+attempt\+\_\+traversal} (\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$node, \hyperlink{util_8h_ae4aaad8f54c6d696b6d2f031e4154185}{sls\+Response} res)
+\begin{DoxyCompactList}\small\item\em returns the node child appropriate to the given response \end{DoxyCompactList}\item 
+\hypertarget{animal_8h_ac6d32d097986f69101fe3ada2f582264}{\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$ {\bfseries sls\+\_\+decide\+\_\+response} (\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$node, \hyperlink{util_8h_ae4aaad8f54c6d696b6d2f031e4154185}{sls\+Response} res)}\label{animal_8h_ac6d32d097986f69101fe3ada2f582264}
+
+\item 
+\hypertarget{animal_8h_a8d4c65dc78d4d9d44c96ccd51154b468}{\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$ {\bfseries sls\+\_\+ask\+\_\+new\+\_\+category} (\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$node)}\label{animal_8h_a8d4c65dc78d4d9d44c96ccd51154b468}
+
+\item 
+\hypertarget{animal_8h_aa55b58abb38c37ca04d7e8c180cba9c4}{\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$ {\bfseries sls\+\_\+ask\+\_\+new\+\_\+animal} (\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$node)}\label{animal_8h_aa55b58abb38c37ca04d7e8c180cba9c4}
+
+\item 
+void \hyperlink{animal_8h_afc41d2ee7223a245472390474388a66e}{sls\+\_\+print\+\_\+node} (F\+I\+L\+E $\ast$stream, \hyperlink{structsls_b_node}{sls\+B\+Node} const $\ast$node)
+\begin{DoxyCompactList}\small\item\em pretty printer for nodes containing animal data \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+implementation of animal game 
+
+Created by Steven Shea on 3/14/15. for C\+M\+P\+S 1600, project 2 
+
+\subsection{Function Documentation}
+\hypertarget{animal_8h_a2b0ed6d68ed0330eeec1563b7d619db6}{\index{animal.\+h@{animal.\+h}!sls\+\_\+animal\+\_\+copy@{sls\+\_\+animal\+\_\+copy}}
+\index{sls\+\_\+animal\+\_\+copy@{sls\+\_\+animal\+\_\+copy}!animal.\+h@{animal.\+h}}
+\subsubsection[{sls\+\_\+animal\+\_\+copy}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ sls\+\_\+animal\+\_\+copy (
+\begin{DoxyParamCaption}
+\item[{void const $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{animal_8h_a2b0ed6d68ed0330eeec1563b7d619db6}
+
+
+\mbox{[}brief description\mbox{]} 
+
+\mbox{[}long description\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & \mbox{[}description\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}description\mbox{]} 
+\end{DoxyReturn}
+\hypertarget{animal_8h_a7ed58297902d6ec775af0ebb220fa597}{\index{animal.\+h@{animal.\+h}!sls\+\_\+animal\+\_\+free@{sls\+\_\+animal\+\_\+free}}
+\index{sls\+\_\+animal\+\_\+free@{sls\+\_\+animal\+\_\+free}!animal.\+h@{animal.\+h}}
+\subsubsection[{sls\+\_\+animal\+\_\+free}]{\setlength{\rightskip}{0pt plus 5cm}void sls\+\_\+animal\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{animal_8h_a7ed58297902d6ec775af0ebb220fa597}
+
+
+\mbox{[}brief description\mbox{]} 
+
+\mbox{[}long description\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & \mbox{[}description\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{animal_8h_ab8fbd6bf6c7d1d805738e44f76966baf}{\index{animal.\+h@{animal.\+h}!sls\+\_\+animal\+\_\+new@{sls\+\_\+animal\+\_\+new}}
+\index{sls\+\_\+animal\+\_\+new@{sls\+\_\+animal\+\_\+new}!animal.\+h@{animal.\+h}}
+\subsubsection[{sls\+\_\+animal\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sls\+Animal\+Data}$\ast$ sls\+\_\+animal\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{{\bf sls\+Bool}}]{is\+\_\+species, }
+\item[{char const $\ast$}]{description}
+\end{DoxyParamCaption}
+)}}\label{animal_8h_ab8fbd6bf6c7d1d805738e44f76966baf}
+
+
+\mbox{[}brief description\mbox{]} 
+
+\mbox{[}long description\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em is\+\_\+species} & \mbox{[}description\mbox{]} \\
+\hline
+{\em description} & \mbox{[}description\mbox{]}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}description\mbox{]} 
+\end{DoxyReturn}
+\hypertarget{animal_8h_aa8c45a2149497dc01b14251ae5fc8507}{\index{animal.\+h@{animal.\+h}!sls\+\_\+animal\+\_\+run@{sls\+\_\+animal\+\_\+run}}
+\index{sls\+\_\+animal\+\_\+run@{sls\+\_\+animal\+\_\+run}!animal.\+h@{animal.\+h}}
+\subsubsection[{sls\+\_\+animal\+\_\+run}]{\setlength{\rightskip}{0pt plus 5cm}void sls\+\_\+animal\+\_\+run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{animal_8h_aa8c45a2149497dc01b14251ae5fc8507}
+
+
+the main game loop 
+
+begins the animal game. read comments in the source for more explanation \hypertarget{animal_8h_a7d99c4d67e4a4e159127e6d87f8d960d}{\index{animal.\+h@{animal.\+h}!sls\+\_\+animaltree\+\_\+new@{sls\+\_\+animaltree\+\_\+new}}
+\index{sls\+\_\+animaltree\+\_\+new@{sls\+\_\+animaltree\+\_\+new}!animal.\+h@{animal.\+h}}
+\subsubsection[{sls\+\_\+animaltree\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sls\+B\+Tree}$\ast$ sls\+\_\+animaltree\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{animal_8h_a7d99c4d67e4a4e159127e6d87f8d960d}
+
+
+\mbox{[}brief description\mbox{]} 
+
+\mbox{[}long description\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}description\mbox{]} 
+\end{DoxyReturn}
+\hypertarget{animal_8h_ab892febaa7660a788e704855bc4646b8}{\index{animal.\+h@{animal.\+h}!sls\+\_\+ask\+\_\+question@{sls\+\_\+ask\+\_\+question}}
+\index{sls\+\_\+ask\+\_\+question@{sls\+\_\+ask\+\_\+question}!animal.\+h@{animal.\+h}}
+\subsubsection[{sls\+\_\+ask\+\_\+question}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sls\+Response} sls\+\_\+ask\+\_\+question (
+\begin{DoxyParamCaption}
+\item[{{\bf sls\+B\+Node} $\ast$}]{node}
+\end{DoxyParamCaption}
+)}}\label{animal_8h_ab892febaa7660a788e704855bc4646b8}
+
+
+queries a response from the user 
+
+uses the description and question type contained in a \hyperlink{structsls_b_node}{sls\+B\+Node}
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & \mbox{[}description\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}description\mbox{]} 
+\end{DoxyReturn}
+\hypertarget{animal_8h_a3f7c6abc7f569fb9f4b0c67792e5c7f6}{\index{animal.\+h@{animal.\+h}!sls\+\_\+attempt\+\_\+traversal@{sls\+\_\+attempt\+\_\+traversal}}
+\index{sls\+\_\+attempt\+\_\+traversal@{sls\+\_\+attempt\+\_\+traversal}!animal.\+h@{animal.\+h}}
+\subsubsection[{sls\+\_\+attempt\+\_\+traversal}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sls\+B\+Node}$\ast$$\ast$ sls\+\_\+attempt\+\_\+traversal (
+\begin{DoxyParamCaption}
+\item[{{\bf sls\+B\+Node} $\ast$}]{node, }
+\item[{{\bf sls\+Response}}]{res}
+\end{DoxyParamCaption}
+)}}\label{animal_8h_a3f7c6abc7f569fb9f4b0c67792e5c7f6}
+
+
+returns the node child appropriate to the given response 
+
+\mbox{[}long description\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & \mbox{[}description\mbox{]} \\
+\hline
+{\em res} & \mbox{[}description\mbox{]}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\char`\"{}left\char`\"{} node if res is S\+L\+S\+\_\+\+Y\+E\+S, \char`\"{}right\char`\"{} node if S\+L\+S\+\_\+\+N\+O 
+\end{DoxyReturn}
+\hypertarget{animal_8h_a6a14fc93061e3fadc618ce66ba394cae}{\index{animal.\+h@{animal.\+h}!sls\+\_\+parse\+\_\+response@{sls\+\_\+parse\+\_\+response}}
+\index{sls\+\_\+parse\+\_\+response@{sls\+\_\+parse\+\_\+response}!animal.\+h@{animal.\+h}}
+\subsubsection[{sls\+\_\+parse\+\_\+response}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sls\+Response} sls\+\_\+parse\+\_\+response (
+\begin{DoxyParamCaption}
+\item[{char const $\ast$}]{res}
+\end{DoxyParamCaption}
+)}}\label{animal_8h_a6a14fc93061e3fadc618ce66ba394cae}
+
+
+parses a user response to a yes/no question 
+
+\mbox{[}long description\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em res} & a string containing a user response \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a response value cooresponding to user response 
+\end{DoxyReturn}
+\hypertarget{animal_8h_afc41d2ee7223a245472390474388a66e}{\index{animal.\+h@{animal.\+h}!sls\+\_\+print\+\_\+node@{sls\+\_\+print\+\_\+node}}
+\index{sls\+\_\+print\+\_\+node@{sls\+\_\+print\+\_\+node}!animal.\+h@{animal.\+h}}
+\subsubsection[{sls\+\_\+print\+\_\+node}]{\setlength{\rightskip}{0pt plus 5cm}void sls\+\_\+print\+\_\+node (
+\begin{DoxyParamCaption}
+\item[{F\+I\+L\+E $\ast$}]{stream, }
+\item[{{\bf sls\+B\+Node} const $\ast$}]{node}
+\end{DoxyParamCaption}
+)}}\label{animal_8h_afc41d2ee7223a245472390474388a66e}
+
+
+pretty printer for nodes containing animal data 
+
+currently prints descriptions of head, node, and children
+
+T\+O\+D\+O\+: implement ascii graphical printing function
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & file pointer for print output \\
+\hline
+{\em node} & node containing \hyperlink{structsls_animal_data}{sls\+Animal\+Data} pointer in {\ttfamily node-\/$>$val} \\
+\hline
+\end{DoxyParams}

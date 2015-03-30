@@ -1,0 +1,40 @@
+\hypertarget{structsls_b_node}{\section{sls\+B\+Node Struct Reference}
+\label{structsls_b_node}\index{sls\+B\+Node@{sls\+B\+Node}}
+}
+
+
+binary tree node for use in \hyperlink{structsls_b_tree}{sls\+B\+Tree} type  
+
+
+
+
+{\ttfamily \#include $<$btree.\+h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structsls_b_node_a0524705972875ad5efb949978895b288}{\hyperlink{structsls_b_tree}{sls\+B\+Tree} $\ast$ \hyperlink{structsls_b_node_a0524705972875ad5efb949978895b288}{tree}}\label{structsls_b_node_a0524705972875ad5efb949978895b288}
+
+\begin{DoxyCompactList}\small\item\em pointer to \hyperlink{structsls_b_tree}{sls\+B\+Tree} which contains the node ( tree holds function pointers for determining node's behavior) \end{DoxyCompactList}\item 
+\hypertarget{structsls_b_node_ab439d78c3bfe56075fdebd149fdbf96a}{\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$ \hyperlink{structsls_b_node_ab439d78c3bfe56075fdebd149fdbf96a}{parent}}\label{structsls_b_node_ab439d78c3bfe56075fdebd149fdbf96a}
+
+\begin{DoxyCompactList}\small\item\em parent node \end{DoxyCompactList}\item 
+\hypertarget{structsls_b_node_a0bedf923c7105f55f45b458efaf10e7e}{\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$ \hyperlink{structsls_b_node_a0bedf923c7105f55f45b458efaf10e7e}{left}}\label{structsls_b_node_a0bedf923c7105f55f45b458efaf10e7e}
+
+\begin{DoxyCompactList}\small\item\em left node \end{DoxyCompactList}\item 
+\hypertarget{structsls_b_node_a38be214870a97c1900ba1b4d004690b0}{\hyperlink{structsls_b_node}{sls\+B\+Node} $\ast$ \hyperlink{structsls_b_node_a38be214870a97c1900ba1b4d004690b0}{right}}\label{structsls_b_node_a38be214870a97c1900ba1b4d004690b0}
+
+\begin{DoxyCompactList}\small\item\em right node \end{DoxyCompactList}\item 
+\hypertarget{structsls_b_node_aa6844e99529c2563d7deceab8c9e0a97}{void $\ast$ \hyperlink{structsls_b_node_aa6844e99529c2563d7deceab8c9e0a97}{val}}\label{structsls_b_node_aa6844e99529c2563d7deceab8c9e0a97}
+
+\begin{DoxyCompactList}\small\item\em data stored in node \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+binary tree node for use in \hyperlink{structsls_b_tree}{sls\+B\+Tree} type 
+
+stores a pointer to arbitrary data, whose memory is 'owned' by the binary tree. If the tree is constructed correctly, all memory will be freed when tree is destoryed 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/animal/\hyperlink{btree_8h}{btree.\+h}\end{DoxyCompactItemize}

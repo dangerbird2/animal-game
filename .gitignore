@@ -138,7 +138,5 @@ sftp-config.json
 # build dir
 build/
 
-#doxygen outputs
-html/
-latex/
+
 
