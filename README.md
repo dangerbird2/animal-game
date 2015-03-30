@@ -35,7 +35,7 @@ doxygen ./doxyfile.in
 # open docs/html/index.html in browser
 ```
 
-* [Documentation](http://dangerbird2.github.io/animal-game/docs/html/)
+* [Documentation](http://dangerbird2.github.io/animal-game/)
 
 Animal game algorithm pseudocode:
 ---
