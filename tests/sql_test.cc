@@ -1,3 +1,5 @@
+#ifndef SLS_NO_SQL
+
 #include <animal/animal_game.h>
 #include <gtest/gtest.h>
 #include <sqlite3.h>
@@ -57,3 +59,5 @@ TEST_F(SqlTests, TestInsert) {
 
     free(source);
 }
+
+#endif /* SLS_NO_SQL */

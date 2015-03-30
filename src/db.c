@@ -4,6 +4,8 @@ Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
 */
 
+#ifndef SLS_NO_SQL
+
 #include <animal/animal_game.h>
 #include <sqlite3.h>
 
@@ -50,3 +52,5 @@ slsBTree *sls_load_animal_tree(char const *path)
 {
     return NULL;
 }
+
+#endif /* DSLS_NO_SQL */

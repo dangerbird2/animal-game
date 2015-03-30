@@ -6,7 +6,7 @@ for CMPS 1600, project 2
 @file
 @brief functions for sqlite storage of node data
 */
-
+#ifndef DSLS_NO_SQL
 #ifndef ANIMAL_DB_H
 #define ANIMAL_DB_H
 
@@ -115,3 +115,4 @@ char const *sls_get_drop_table_statement();
 
 
 #endif /* ANIMAL_DB_H */
+#endif /* DSLS_NO_SQL */

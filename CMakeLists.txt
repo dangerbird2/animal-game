@@ -21,8 +21,8 @@ set(ANIMAL_TEST_SRC
 find_library(SQLITE sqlite3)
 if (${SQLITE} STREQUAL SQLITE-NOTFOUND)
     # if not found, set no sql compiler flag
-    set(CMAKE_C_FLAGS -DSLS_NO_SQL)
-    set(CMAKE_CXX_FLAGS -DSLS_NO_SQL)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSLS_NO_SQL")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DSLS_NO_SQL")
 endif (${SQLITE} STREQUAL SQLITE-NOTFOUND)
 
 add_subdirectory(extern/googletest)
