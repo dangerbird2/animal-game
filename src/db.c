@@ -12,7 +12,7 @@ for CMPS 1600, project 2
 
 
 /**
- * sql code for creating 
+ * sql code for creating
  */
 static char const *SLS_CREATE_TABLES_SQL =
 "CREATE TABLE IF NOT EXISTS trees ("

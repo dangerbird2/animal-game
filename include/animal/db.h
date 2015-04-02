@@ -6,11 +6,37 @@ for CMPS 1600, project 2
 @file
 @brief functions for sqlite storage of node data
 */
-#ifndef DSLS_NO_SQL
 #ifndef ANIMAL_DB_H
 #define ANIMAL_DB_H
 
+
 #include "btree.h"
+
+/**
+ * @brief saves a tree to a sqlite3 database
+ * @details at the given path
+ *
+ * @param path path to a sqlite3 database
+ * use ":memory:" for an in-memory database
+ * @param tree pointer to a animal-data storing
+ * slsBTree
+ *
+ * @return [description]
+ */
+slsBool sls_save_animal_tree(char const *path, slsBTree *tree);
+
+/**
+ * @brief loads and parses a sqlite3 database
+ * @details for use in animal guessing game
+ *
+ * @param path path to a sqlite3 database
+ * @return if the given path stores valid game data,
+ * a slsBTree pointer containing data described
+ */
+slsBTree *sls_load_animal_tree(char const *path);
+
+
+#ifndef SLS_NO_SQL
 #include <sqlite3.h>
 
 typedef struct slsAnimalNodeSchema slsAnimalNodeSchema;
@@ -18,7 +44,7 @@ typedef struct slsAnimalNodeSchema slsAnimalNodeSchema;
  * @brief struct used for mapping sql data
  * to a slsBNode structure
  * @details [long description]
- * 
+ *
  */
 struct slsAnimalNodeSchema {
     long id;
@@ -34,7 +60,7 @@ struct slsAnimalNodeSchema {
  * @brief callback function type for sqlite3 queries
  * @details used as a parameter for sqlite3_exec
  * more details on https://www.sqlite.org/c3ref/exec.html
- * 
+ *
  * @param n_cols number of columns query result
  * @param col_data_array [description]
  * @param col_name_array [description]
@@ -51,7 +77,7 @@ typedef int (*slsSqlCallbackFn) (
  * @details accepts a char pointer. If the pointer
  * is non-null, it prints it to stderr and returns
  * the current function with given rval
- * 
+ *
  * @param \_err\_ if non-null, an malloced error message
  * @param \_rval\_ value to return if failure occurs
  */
@@ -77,29 +103,6 @@ typedef int (*slsSqlCallbackFn) (
 
 
 /**
- * @brief saves a tree to a sqlite3 database
- * @details at the given path
- * 
- * @param path path to a sqlite3 database
- * use ":memory:" for an in-memory database
- * @param tree pointer to a animal-data storing
- * slsBTree
- * 
- * @return [description]
- */
-slsBool sls_save_animal_tree(char const *path, slsBTree *tree);
-
-/**
- * @brief loads and parses a sqlite3 database
- * @details for use in animal guessing game
- * 
- * @param path path to a sqlite3 database
- * @return if the given path stores valid game data,
- * a slsBTree pointer containing data described
- */
-slsBTree *sls_load_animal_tree(char const *path);
-
-/**
  * @brief gets CREATE TABLE statement
  * @details for storing btree and bnode data
  * @return a static constant string
@@ -114,5 +117,6 @@ char const *sls_get_create_table_sql();
 char const *sls_get_drop_table_statement();
 
 
-#endif /* ANIMAL_DB_H */
 #endif /* DSLS_NO_SQL */
+#endif /* ANIMAL_DB_H */
+
