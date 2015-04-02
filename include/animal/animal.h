@@ -23,6 +23,23 @@ struct slsAnimalData {
     animal category
     */
     char *description;
+    /*
+     * sqlite id keys
+     */
+
+    /**
+     * @brief id in database *nodes* table
+     */
+    long db_id;
+    /**
+     * @brief id of right node in database *nodes* table
+     */
+    long left_id;
+
+    /**
+     * @brief id of left node in database *nodes* table
+     */
+    long right_id;
 };
 
 /******************
@@ -126,11 +143,18 @@ void sls_animalnode_print_node(FILE *stream, slsBNode const *node);
 *******************/
 
 /**
+ * 
+ */
+
+/**
  * @brief the main game loop
  * @details begins the animal game.
  * read comments in the source for more explanation
+ * 
+ * @param argc pointer to program argv
+ * @param argv program argc
  */
-void sls_animal_run();
+void sls_animal_run(int const *argc, char **argv);
 
 /**
  * @brief parses a user response to a yes/no question

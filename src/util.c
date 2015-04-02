@@ -6,6 +6,7 @@ for CMPS 1600, project 2
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
 
 #include <animal/animal_game.h>
@@ -76,6 +77,25 @@ char *sls_getline(FILE *file, size_t n)
 
 int sls_strncmp_nocase(char const *a, char const *b, size_t size)
 {
-    return 0;
+    size_t i;
+    int res = 0;
+    for (i = 0; i<size; ++i) {
+        /* check for string end */
+        int aa = tolower(a[i]);
+        int bb = tolower(b[i]);
+        if (aa > bb) {
+            res = 1;
+            break;
+        } else if (bb > aa) {
+            res = -1;
+            break;
+        } else {
+            res = 0;
+        }
+        if ((a[i] == '\0') || (b[i] == '\0')) {
+            break;
+        }
+    }
+    return res;
 }
 

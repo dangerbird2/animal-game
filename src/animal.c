@@ -65,6 +65,9 @@ slsAnimalData *sls_animal_new(
         }
         data->description = sls_stringalloc(description, description_size);
         data->description[description_size] = '\0';
+        data->db_id = -1;
+        data->left_id = -1;
+        data->right_id = -1;
     }
 
     return data;
@@ -89,11 +92,21 @@ slsBNode *sls_animalnode_new(
     return node;
 }
 
-void sls_animal_run() 
+void sls_animal_run(int const *argc, char **argv)
 {
     slsBTree *tree = NULL;
     slsBNode *current_node = NULL;
     FILE *stream = stdin;
+    char const *db_path;
+
+    /*
+    retrieve database path from program arguments
+    */
+    if (*argc > 1) {
+        db_path = argv[1];
+    } else {
+        db_path = "animal.db";
+    }
     /*
     Game setup.
     Randomly select a category and initialize the tree structure,
@@ -112,15 +125,23 @@ void sls_animal_run()
 
     const size_t n_categories = sizeof(categories)/sizeof(char*);
 
-    /*
-    setup the game tree with a randomly selected category
-    */
-    tree = sls_animaltree_new();
-    tree->head = sls_animalnode_new(
+    /* try loading tree from database */
+    tree = sls_load_animal_tree(db_path);
+    if (!tree) {
+        /*
+        if no database is loaded,
+        setup the game tree with a randomly selected category
+        */
+        tree = sls_animaltree_new();
+        tree->head = sls_animalnode_new(
         tree, 
         SLS_FALSE,
         categories[rand() % n_categories]);
-    current_node = tree->head;
+        current_node = tree->head;
+    }
+
+
+    
 
     if (!tree || !current_node) {
         fprintf(stderr, "ERROR: memory failure. Game quiting");
@@ -174,8 +195,9 @@ void sls_animal_run()
 slsResponse sls_parse_response(char const *res) 
 {
     char const *ptr = res;
-    const size_t len = strlen(res);
+    const size_t len = SLS_MAX_INPUT_SIZE;
     slsResponse res_value;
+
     size_t i;
 
     /* search for first alphabetical value */
@@ -188,22 +210,22 @@ slsResponse sls_parse_response(char const *res)
 
     int c = tolower(*ptr);
 
-    /* 
-    use a switch statement to match the first letter in response
-    to a valid response char (y, n, or q)
-    */
-    switch (c) {
-        case 'y':
-            res_value = SLS_YES;
-            break;
-        case 'n':
-            res_value = SLS_NO;
-            break;
-        case 'q':
-            res_value = SLS_QUIT;
-            break;
-        default:
-            res_value = SLS_UNDETERMINED;
+    if ((sls_strncmp_nocase("quit", res, len) == 0) ||
+        (sls_strncmp_nocase("q", res, len) == 0)) {
+
+        res_value = SLS_QUIT;
+
+    } else if ((sls_strncmp_nocase("yes", res, len) == 0) ||
+        (sls_strncmp_nocase("y", res, len) == 0)) {
+
+        res_value = SLS_YES;
+    } else if ((sls_strncmp_nocase("no", res, len) == 0) ||
+        (sls_strncmp_nocase("n", res, len) == 0)) {
+
+        res_value = SLS_NO;
+
+    } else {
+        res_value = SLS_UNDETERMINED;
     }
 
     return res_value;

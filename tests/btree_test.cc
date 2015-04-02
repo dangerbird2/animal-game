@@ -183,5 +183,34 @@ TEST_F(UtilTest, TestResParse) {
     }
 }
 
+/*
+tests case-insensitive strcmp
+*/
+TEST_F(UtilTest, StrCmpTest) {
+    const auto l = 100lu;
+    auto valid_pairs = std::vector<int> {
+        sls_strncmp_nocase("Q", "Q", l),
+        sls_strncmp_nocase("Q", "q", l),
+        sls_strncmp_nocase("Quit", "Quit", l),
+        sls_strncmp_nocase("Quit", "QuiT", l),
+        sls_strncmp_nocase("Quit", "QuiT", 1)
+
+    };
+    auto invalid_pairs = std::vector<int> {
+        sls_strncmp_nocase("Quit", "QuiT ", l),
+        sls_strncmp_nocase("Quit", " QuiT ", l),
+        sls_strncmp_nocase("Quit", " QuiT ", l),
+        sls_strncmp_nocase("no", " YES ", l),
+        sls_strncmp_nocase("", "   ", l)
+    };
+
+    for (const auto &i: valid_pairs) {
+        EXPECT_EQ(0, i);
+    }
+    for (const auto &i: invalid_pairs) {
+        EXPECT_NE(0, i);
+    }
+}
+
 
 } // slsTest
