@@ -54,7 +54,7 @@ slsBTree *sls_load_animal_tree(char const *path)
     return NULL;
 }
 
-long sls_save_animalnode(sqlite *db, slsBNode *node) 
+long sls_save_animalnode(sqlite3 *db, slsBNode *node) 
 {
     if (/*!db || */!node || !node->val) {
         fprintf(stderr, "WARNING: invalid parameters\n");

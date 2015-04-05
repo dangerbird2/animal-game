@@ -115,7 +115,7 @@ char const *sls_get_drop_table_statement();
  * @param node 
  * @return node's id key in table
  */
-long sls_save_animalnode(sqlite *db, slsBNode *node);
+long sls_save_animalnode(sqlite3 *db, slsBNode *node);
 
 #endif /* SLS_NO_SQL */
 
