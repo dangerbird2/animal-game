@@ -20,3 +20,5 @@ TEST_F(AnimalTests, CopyData) {
   EXPECT_EQ(dataA->is_species, dataB->is_species);
   EXPECT_STREQ(dataA->description, dataB->description);
 }
+
+TEST_F(AnimalTests, BuildTree) {}

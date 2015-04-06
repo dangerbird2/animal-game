@@ -23,12 +23,13 @@ for CMPS 1600, project 2
  * @param \_err\_ if non-null, an malloced error message
  * @param \_rval\_ value to return if failure occurs
  */
-#define SLS_ERRCHECK(_err_, _rval_)            \
-  do {                                         \
-    if ((_err_) != NULL) {                     \
-      fprintf(stderr, "ERROR: %s\n", (_err_)); \
-      free((_err_));                           \
-      return (_rval_);                         \
+#define SLS_ERRCHECK(err, rval)              \
+  do {                                       \
+    if ((err) != NULL) {                     \
+      fprintf(stderr, "ERROR %s %i:\n\t %s\n", \
+      __FILE__, __LINE__, (err)); \
+      free((err));                           \
+      return (rval);                         \
     }                                          \
   } while (0)
 
@@ -36,11 +37,12 @@ for CMPS 1600, project 2
  * @brief same as SLS_ERRCHECK, but causes function to exit
  * void on error
  */
-#define SLS_ERRCHECK_VOID(_err_)               \
+#define SLS_ERRCHECK_VOID(err)               \
   do {                                         \
-    if ((_err_) != NULL) {                     \
-      fprintf(stderr, "ERROR: %s\n", (_err_)); \
-      free((_err_));                           \
+    if ((err) != NULL) {                     \
+      fprintf(stderr, "ERROR %s %i:\n\t %s\n", \
+        __FILE__, __LINE__, (err)); \
+      free((err));                           \
       return;                                  \
     }                                          \
   } while (0)

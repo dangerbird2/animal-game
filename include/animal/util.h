@@ -27,10 +27,7 @@ for CMPS 1600, project 2
 /**
  * @brief bool type enumeration
  */
-typedef enum slsBool {
-  SLS_FALSE = 0,
-  SLS_TRUE = 1
-} slsBool;
+typedef enum slsBool { SLS_FALSE = 0, SLS_TRUE = 1 } slsBool;
 
 /**
  * @brief enum for user response codes
@@ -81,5 +78,16 @@ char *sls_getline(FILE *file, size_t n);
  *than in str2
  */
 int sls_strncmp_nocase(char const *a, char const *b, size_t size);
+
+/**
+ * @brief safe implementation of strlen
+ * @details [long description]
+ *
+ * @param str [description]
+ * @param n [description]
+ *
+ * @return [description]
+ */
+size_t sls_strlen_s(char const *str, size_t n);
 
 #endif /* _SLS_UTIL_H_ */

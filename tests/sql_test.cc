@@ -41,7 +41,9 @@ TEST_F(SqlTests, TestInsert) {
   EXPECT_EQ(SQLITE_OK, rc);
   EXPECT_EQ(err, nullptr) << "errmsg = " << std::string(err);
 
-  if (source) { sqlite3_free(source); }
+  if (source) {
+    free(source);
+  }
 }
 
 #endif /* SLS_NO_SQL */

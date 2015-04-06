@@ -105,7 +105,6 @@ TEST_F(UtilTest, Teststralloc) {
 }
 
 TEST_F(UtilTest, TestResParse) {
-
   auto yes = std::vector<char const *>{"yes", "y", "Y", "YES", "yEs"};
 
   auto no = std::vector<char const *>{"no", "NO", "N", "n"};

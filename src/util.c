@@ -8,15 +8,35 @@ for CMPS 1600, project 2
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <assert.h>
 
 #include <animal/animal_game.h>
 
+size_t sls_strlen_s(char const *str, size_t n) {
+  size_t i = 0;
+  for (i = 0; i < n + 2; ++i) {
+    if (str[i] == '\0') {
+      break;
+    }
+  }
+  assert(i != n + 1);
+  return i;
+}
+
 char *sls_stringalloc(char const *str, size_t n) {
   char *new_str = NULL;
+  if (!str) {
+    return NULL;
+  }
+
+
   new_str = calloc(sizeof(char), n + 1);
-  if (new_str && str) {
+  if (new_str) {
     new_str[0] = '\0';
     size_t i = 0;
+
+    /* manual string copy routine. unlike strcpy,
+    it is bounded by n parameter*/
     for (i = 0; i < n; ++i) {
       new_str[i] = str[i];
 
@@ -24,7 +44,10 @@ char *sls_stringalloc(char const *str, size_t n) {
         break;
       }
     }
+
+    new_str[n] = '\0';
   }
+
 
   return new_str;
 }
@@ -50,7 +73,7 @@ char *sls_getline(FILE *file, size_t n) {
     if (i >= alloced_size) {
       alloced_size *= 2;
       line = realloc(line, alloced_size);
-      if (!line) {/* make sure realloc worked correctly */
+      if (!line) { /* make sure realloc worked correctly */
         line = NULL;
         break;
       }
@@ -71,10 +94,14 @@ char *sls_getline(FILE *file, size_t n) {
 int sls_strncmp_nocase(char const *a, char const *b, size_t size) {
   size_t i;
   int res = 0;
+
   for (i = 0; i < size; ++i) {
     /* check for string end */
     int aa = tolower(a[i]);
     int bb = tolower(b[i]);
+
+    /* compare string value.
+    should return value comparable to strcmp*/
     if (aa > bb) {
       res = 1;
       break;
