@@ -27,17 +27,21 @@ struct slsAnimalData {
    * sqlite id keys
    */
 
+
   /**
    * @brief id in database *nodes* table
+   * DATABASE FIELD. not used normally
    */
   long db_id;
   /**
    * @brief id of right node in database *nodes* table
+   * DATABASE FIELD. not used normally
    */
   long left_id;
 
   /**
    * @brief id of left node in database *nodes* table
+   * DATABASE FIELD. not used normally
    */
   long right_id;
 };
@@ -58,11 +62,11 @@ struct slsAnimalData {
 slsAnimalData *sls_animal_new(slsBool is_species, char const *description);
 
 /**
- * @brief [brief description]
- * @details [long description]
+ * @brief copies animal data
+ * @details for use in a slsBTree copy callback
  *
- * @param data [description]
- * @return [description]
+ * @param data a pointer to slsAnimalData
+ * @return copy of data pointer
  */
 void *sls_animal_copy(void const *data);
 
@@ -70,7 +74,7 @@ void *sls_animal_copy(void const *data);
  * @brief free animal data
  * @details [long description]
  *
- * @param data [description]
+ * @param data pointer to heap-allocated slsAnimalData
  */
 void sls_animal_free(void *data);
 
@@ -79,19 +83,21 @@ void sls_animal_free(void *data);
 *******************/
 
 /**
- * @brief [brief description]
+ * @brief creates new slsBTree for storing animal
+ * game nodes
  * @details [long description]
- * @return [description]
+ * @return an slsBTree with valid callbacks
+ * for implementing a decision tree
  */
 slsBTree *sls_animaltree_new();
 
 /**
  * @brief create a new animal slsBNode
- * @details [long description]
  *
- * @param tree [description]
- * @param is_species [description]
- * @param description [description]
+ * @param tree the tree the node belongs to
+ * (provides callbacks and manages memory)
+ * @param is_species SLS_TRUE if species, otherwise a category
+ * @param description node description
  * @return [description]
  */
 slsBNode *sls_animalnode_new(slsBTree *tree, slsBool is_species,
