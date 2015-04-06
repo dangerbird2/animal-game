@@ -92,10 +92,9 @@ void sls_animal_run(int const *argc, char **argv) {
   with the category represented by the head node
   */
   /* a list of categories to start the tree */
-  char const *categories[] = {
-      "fur",   "no legs",    "skeletons", "exoskeletons",
-      "wings", "long noses", "four legs",
-  };
+  char const *categories[] = {"fur",          "no legs", "skeletons",
+                              "exoskeletons", "wings",   "long noses",
+                              "four legs", };
 
   const size_t n_categories = sizeof(categories) / sizeof(char *);
 

@@ -50,7 +50,7 @@ char *sls_getline(FILE *file, size_t n) {
     if (i >= alloced_size) {
       alloced_size *= 2;
       line = realloc(line, alloced_size);
-      if (!line) { /* make sure realloc worked correctly */
+      if (!line) {/* make sure realloc worked correctly */
         line = NULL;
         break;
       }

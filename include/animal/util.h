@@ -27,7 +27,10 @@ for CMPS 1600, project 2
 /**
  * @brief bool type enumeration
  */
-typedef enum slsBool { SLS_FALSE = 0, SLS_TRUE = 1 } slsBool;
+typedef enum slsBool {
+  SLS_FALSE = 0,
+  SLS_TRUE = 1
+} slsBool;
 
 /**
  * @brief enum for user response codes
