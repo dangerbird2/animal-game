@@ -1,6 +1,10 @@
 /**
 Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
+
+@file
+@brief master header for including all function and
+type declarations
 */
 
 #ifndef SLS_ANIMAL_GAME_H
@@ -19,6 +23,5 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif /* SLS_ANIMAL_GAME_H */
