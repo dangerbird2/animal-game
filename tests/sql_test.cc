@@ -33,6 +33,7 @@ TEST_F(SqlTests, TestInsert) {
         "INSERT INTO nodes(is_species, description)"
         "VALUES (%d, '%s');";
   auto source = sqlite3_mprintf(fmt, SLS_TRUE, "dog");
+  ASSERT_NE(source, nullptr) << "sqlite3_mprintf produced nullptr";
 
   char *err = nullptr;
   auto rc = sqlite3_exec(db, source, nullptr, nullptr, &err);
@@ -40,7 +41,7 @@ TEST_F(SqlTests, TestInsert) {
   EXPECT_EQ(SQLITE_OK, rc);
   EXPECT_EQ(err, nullptr) << "errmsg = " << std::string(err);
 
-  free(source);
+  if (source) { free(source); }
 }
 
 #endif /* SLS_NO_SQL */
