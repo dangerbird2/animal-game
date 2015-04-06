@@ -18,8 +18,6 @@ extern "C" {
 #include "btree.h"
 #include "animal.h"
 
-#include "db.h"
-
 #ifdef __cplusplus
 }
 #endif

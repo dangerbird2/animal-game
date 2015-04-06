@@ -100,7 +100,6 @@ void sls_animal_run(int const *argc, char **argv) {
   const size_t n_categories = sizeof(categories) / sizeof(char *);
 
   /* try loading tree from database */
-  tree = sls_load_animal_tree(db_path);
   if (!tree) {
     /*
     if no database is loaded,
@@ -155,7 +154,6 @@ void sls_animal_run(int const *argc, char **argv) {
     }
   }
 
-  sls_save_animal_tree(db_path, tree);
 
   sls_btree_destroy(tree);
 }
