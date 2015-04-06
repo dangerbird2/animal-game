@@ -9,10 +9,7 @@ for CMPS 1600, project 2
 #include <stdlib.h>
 #include <animal/animal_game.h>
 
-
-int main(int argc, char **argv)
-{
-
-    sls_animal_run(&argc, argv);
-    return 0;
+int main(int argc, char **argv) {
+  sls_animal_run(&argc, argv);
+  return 0;
 }

@@ -24,5 +24,4 @@ extern "C" {
 }
 #endif
 
-
 #endif /* SLS_ANIMAL_GAME_H */

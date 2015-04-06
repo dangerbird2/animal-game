@@ -9,10 +9,9 @@ for CMPS 1600, project 2
 #ifndef ANIMAL_DB_H
 #define ANIMAL_DB_H
 
-
 #include "btree.h"
 #ifndef SLS_NO_SQL
-    #include <sqlite3.h>
+#include <sqlite3.h>
 #endif /* DSLS_NO_SQL */
 
 /**
@@ -24,27 +23,27 @@ for CMPS 1600, project 2
  * @param \_err\_ if non-null, an malloced error message
  * @param \_rval\_ value to return if failure occurs
  */
-#define SLS_ERRCHECK(_err_, _rval_) do {            \
-        if((_err_) != NULL) {                       \
-            fprintf(stderr, "ERROR: %s\n", (_err_));\
-            free((_err_));                          \
-            return (_rval_);                        \
-        }                                           \
-    } while(0)
+#define SLS_ERRCHECK(_err_, _rval_)            \
+  do {                                         \
+    if ((_err_) != NULL) {                     \
+      fprintf(stderr, "ERROR: %s\n", (_err_)); \
+      free((_err_));                           \
+      return (_rval_);                         \
+    }                                          \
+  } while (0)
 
 /**
  * @brief same as SLS_ERRCHECK, but causes function to exit
  * void on error
  */
-#define SLS_ERRCHECK_VOID(_err_) do {               \
-        if((_err_) != NULL) {                       \
-            fprintf(stderr, "ERROR: %s\n", (_err_));\
-            free((_err_));                          \
-            return;                                 \
-        }                                           \
-    } while(0)
-
-
+#define SLS_ERRCHECK_VOID(_err_)               \
+  do {                                         \
+    if ((_err_) != NULL) {                     \
+      fprintf(stderr, "ERROR: %s\n", (_err_)); \
+      free((_err_));                           \
+      return;                                  \
+    }                                          \
+  } while (0)
 
 /**
  * @brief saves a tree to a sqlite3 database
@@ -69,9 +68,6 @@ slsBool sls_save_animal_tree(char const *path, slsBTree *tree);
  */
 slsBTree *sls_load_animal_tree(char const *path);
 
-
-
-
 /**
  * @brief callback function type for sqlite3 queries
  * @details used as a parameter for sqlite3_exec
@@ -82,12 +78,8 @@ slsBTree *sls_load_animal_tree(char const *path);
  * @param col_name_array [description]
  * @return sqlite3 return code
  */
-typedef int (*slsSqlCallbackFn) (
-    void *data,
-    int n_cols,
-    char **col_data_array,
-    char **col_name_array);
-
+typedef int (*slsSqlCallbackFn)(void *data, int n_cols, char **col_data_array,
+                                char **col_name_array);
 
 #ifndef SLS_NO_SQL
 
@@ -110,16 +102,13 @@ char const *sls_get_drop_table_statement();
  * @details if not already in database, update
  * slsAnimalData id fields. Uses a depth-first
  * search
- * 
+ *
  * @param db sqlite3 database handle
- * @param node 
+ * @param node
  * @return node's id key in table
  */
 long sls_save_animalnode(sqlite3 *db, slsBNode *node);
 
 #endif /* SLS_NO_SQL */
 
-
-
 #endif /* ANIMAL_DB_H */
-

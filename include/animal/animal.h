@@ -14,32 +14,32 @@ for CMPS 1600, project 2
 
 typedef struct slsAnimalData slsAnimalData;
 struct slsAnimalData {
-    /**
-    indicates whether node describes a species or a category
-    */
-    slsBool is_species;
-    /*
-    animal description: either animal name or
-    animal category
-    */
-    char *description;
-    /*
-     * sqlite id keys
-     */
+  /**
+  indicates whether node describes a species or a category
+  */
+  slsBool is_species;
+  /*
+  animal description: either animal name or
+  animal category
+  */
+  char *description;
+  /*
+   * sqlite id keys
+   */
 
-    /**
-     * @brief id in database *nodes* table
-     */
-    long db_id;
-    /**
-     * @brief id of right node in database *nodes* table
-     */
-    long left_id;
+  /**
+   * @brief id in database *nodes* table
+   */
+  long db_id;
+  /**
+   * @brief id of right node in database *nodes* table
+   */
+  long left_id;
 
-    /**
-     * @brief id of left node in database *nodes* table
-     */
-    long right_id;
+  /**
+   * @brief id of left node in database *nodes* table
+   */
+  long right_id;
 };
 
 /******************
@@ -55,9 +55,7 @@ struct slsAnimalData {
  *
  * @return [description]
  */
-slsAnimalData *sls_animal_new(
-    slsBool is_species,
-    char const *description);
+slsAnimalData *sls_animal_new(slsBool is_species, char const *description);
 
 /**
  * @brief [brief description]
@@ -96,10 +94,8 @@ slsBTree *sls_animaltree_new();
  * @param description [description]
  * @return [description]
  */
-slsBNode *sls_animalnode_new(
-    slsBTree *tree,
-    slsBool is_species,
-    char const *description);
+slsBNode *sls_animalnode_new(slsBTree *tree, slsBool is_species,
+                             char const *description);
 
 /**
  * @brief retrieve is_species from animalnode
@@ -107,14 +103,11 @@ slsBNode *sls_animalnode_new(
  * @param node slsBNode containing slsAnimalData pointer
  * @return SLS_TRUE if node contains a species
  */
-slsBool sls_animalnode_get_isspecies(
-    slsBNode const  *node);
+slsBool sls_animalnode_get_isspecies(slsBNode const *node);
 
-
-void sls_animalnode_store_child_descriptions(
-    slsBNode const *node,
-    char const** left_desc,
-    char const** right_desc);
+void sls_animalnode_store_child_descriptions(slsBNode const *node,
+                                             char const **left_desc,
+                                             char const **right_desc);
 
 /**
  * @brief retrieve description from animalnode
@@ -122,8 +115,7 @@ void sls_animalnode_store_child_descriptions(
  * @param node slsBNode containing slsAnimalData pointer
  * @return animal data description
  */
-char const *sls_animalnode_get_description(
-    slsBNode const  *node);
+char const *sls_animalnode_get_description(slsBNode const *node);
 
 /**
  * @brief pretty printer for nodes containing animal data
@@ -136,21 +128,19 @@ char const *sls_animalnode_get_description(
  */
 void sls_animalnode_print_node(FILE *stream, slsBNode const *node);
 
-
-
 /******************
 * ANIMAL GAME LOGIC
 *******************/
 
 /**
- * 
+ *
  */
 
 /**
  * @brief the main game loop
  * @details begins the animal game.
  * read comments in the source for more explanation
- * 
+ *
  * @param argc pointer to program argv
  * @param argv program argc
  */
@@ -186,10 +176,7 @@ slsResponse sls_ask_question(FILE *stream, slsBNode *node);
  *
  * @return "left" node if res is SLS_YES, "right" node if SLS_NO
  */
-slsBNode **sls_attempt_traversal(
-    slsBNode *node,
-    slsResponse res);
-
+slsBNode **sls_attempt_traversal(slsBNode *node, slsResponse res);
 
 /**
  * @brief traverse to next node
@@ -201,11 +188,7 @@ slsBNode **sls_attempt_traversal(
  * @return node pointer indicating the next
  * node to traverse
  */
-slsBNode *sls_decide_response(
-    FILE *stream,
-    slsBNode *node,
-    slsResponse res);
-
+slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res);
 
 /**
  * @brief asks user for new category,
@@ -230,7 +213,5 @@ slsBNode *sls_ask_new_category(FILE *stream, slsBNode *node);
  * @return [description]
  */
 slsBNode *sls_ask_new_animal(FILE *stream, slsBNode *node);
-
-
 
 #endif /* _ANIMAL_ANIMAL_H_ */
