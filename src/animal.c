@@ -3,7 +3,7 @@ Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
 */
 
-#include <animal/animal_game.h>
+#include "../include/animal/animal_game.h"
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
@@ -30,6 +30,10 @@ void *sls_animal_copy(void const *data) {
 
   return copied;
 }
+
+
+void sls_animaldata_free(slsAnimalData *data);
+
 void sls_animal_free(void *data) {
   slsAnimalData *t_data = data;
   if (t_data) {
@@ -173,8 +177,6 @@ slsResponse sls_parse_response(char const *res) {
       break;
     }
   }
-
-  int c = tolower(*ptr);
 
   if ((sls_strncmp_nocase("quit", res, len) == 0) ||
       (sls_strncmp_nocase("q", res, len) == 0)) {

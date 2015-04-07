@@ -10,7 +10,7 @@ for CMPS 1600, project 2
 #include <string.h>
 #include <assert.h>
 
-#include <animal/animal_game.h>
+#include "../include/animal/animal_game.h"
 
 size_t sls_strlen_s(char const *str, size_t n) {
   size_t i = 0;

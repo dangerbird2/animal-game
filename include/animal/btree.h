@@ -146,4 +146,37 @@ slsBNode *sls_bnode_new(slsBTree *tree, void const *val, slsBNode *left,
  */
 void sls_bnode_destroy(slsBNode *node);
 
+/**
+ * @brief insert node at given direction
+ * 
+ * @param node parent node
+ * @param child child node
+ * @param dirrection enum value indicating direction to
+ * insert child node
+ * @return child node
+ */
+slsBNode *sls_bnode_insert(slsBNode *node, slsBNode *child,
+                            slsChildSelector dirrection);
+
+/**
+ * @brief insert node as left child
+ * 
+ * @param node parent node
+ * @param left child node
+ * 
+ * @return child node
+ */
+slsBNode *sls_bnode_insert_left(slsBNode *node, slsBNode *left);
+
+
+/**
+ * @brief insert node as right child
+ * 
+ * @param node parent node
+ * @param right child node
+ * 
+ * @return child node
+ */
+slsBNode *sls_bnode_insert_right(slsBNode *node, slsBNode *right);
+
 #endif /*_ANIMAL_BTREE_H_*/

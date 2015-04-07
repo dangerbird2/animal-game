@@ -3,7 +3,7 @@ btree.c
 Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
 */
-#include <animal/animal_game.h>
+#include "../include/animal/animal_game.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -76,6 +76,28 @@ void sls_bnode_destroy(slsBNode *node) {
 
     free(node);
   } else {
-    fprintf(stderr, "WARNING %s: node is null\n", __func__);
+    fprintf(stderr, "WARNING %s %i:\n\tnode is null\n", __FILE__, __LINE__);
   }
 }
+
+slsBNode *sls_bnode_insert(slsBNode *node, slsBNode *child,
+                            slsChildSelector dirrection)
+{
+  if (!node) {
+    fprintf(stderr, "ERROR %s %i:\n\tnode is null"
+      ,__FILE__, __LINE__);
+    return NULL;
+  }
+  return child;
+}
+
+slsBNode *sls_bnode_insert_left(slsBNode *node, slsBNode *left)
+{
+  return sls_bnode_insert(node, left, SLS_CHILD_LEFT);
+}
+
+slsBNode *sls_bnode_insert_right(slsBNode *node, slsBNode *right)
+{
+  return sls_bnode_insert(node, right, SLS_CHILD_RIGHT);
+}
+
