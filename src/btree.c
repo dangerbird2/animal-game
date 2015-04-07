@@ -123,8 +123,3 @@ slsBNode *sls_bnode_insert_left(slsBNode *node, slsBNode *left) {
 slsBNode *sls_bnode_insert_right(slsBNode *node, slsBNode *right) {
   return sls_bnode_insert(node, right, SLS_CHILD_RIGHT);
 }
-
-slsBNode *sls_bnode_insert_parent(slsBNode *node, slsBNode *parent)
-{
-
-}

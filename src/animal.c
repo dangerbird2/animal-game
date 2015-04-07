@@ -361,10 +361,7 @@ slsBNode **sls_attempt_traversal(slsBNode *node, slsResponse res) {
 }
 
 slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res) {
-  /*
-  TODO: simplify this logic
-  it works right now, but it's pretty damn confusing
-  */
+  
   assert(stream);
   if (!node || !node->val || !node->tree) {
     assert(0);
@@ -399,17 +396,24 @@ slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res) {
     animal and the animal currently given
     */
     fprintf(stderr, "I guessed wrong.\n");
-    new_node = sls_ask_new_category(stream, node);
+    /* find what differentiates user's animal from given animal */
+    new_node = sls_ask_new_category(stream, node); 
     slsBNode *parent = node->parent;
-    node->parent = new_node;
-    new_node->parent = parent;
 
-    if (parent->left == node) {
-      parent->left = new_node;
-    } else {
-      parent->right = new_node;
-    }
-    new_node->left = node;
+    /* find which child the current node is */
+    slsChildSelector dir = (parent->left == node)?
+      SLS_CHILD_LEFT:
+      SLS_CHILD_RIGHT;
+
+
+    /* move node to left of new_node (node's animal is *not* new_node's category) */
+    sls_bnode_insert_left(new_node, node);
+    /* insert new_node into parent's child */
+    sls_bnode_insert(parent, new_node, dir);
+
+    /* traverse to new node, where program asks user
+    what the animal is */
+    return new_node;
 
   } else if (!data->is_species) {
     /*
@@ -418,12 +422,12 @@ slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res) {
 
     */
     new_node = sls_ask_new_animal(stream, node);
-    new_node->parent = node;
     if (res == SLS_YES) {
-      node->right = new_node;
+      sls_bnode_insert_right(node, new_node);
     } else {
-      node->left = new_node;
+      sls_bnode_insert_left(node, new_node);
     }
+
   }
 
   /*
