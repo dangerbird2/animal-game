@@ -8,6 +8,12 @@ for CMPS 1600, project 2
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+private function declarations
+*/
+slsBNode **_sls_bnode_select_child(slsBNode *node, slsChildSelector dirrection);
+
+
 slsBTree *sls_btree_new(slsCopyFn copy_fn, slsFreeFn free_fn) {
   slsBTree *tree = NULL;
   tree = calloc(sizeof(slsBTree), 1);
@@ -80,24 +86,45 @@ void sls_bnode_destroy(slsBNode *node) {
   }
 }
 
-slsBNode *sls_bnode_insert(slsBNode *node, slsBNode *child,
-                            slsChildSelector dirrection)
+slsBNode **_sls_bnode_select_child(slsBNode *node, slsChildSelector dirrection)
 {
   if (!node) {
-    fprintf(stderr, "ERROR %s %i:\n\tnode is null"
-      ,__FILE__, __LINE__);
     return NULL;
   }
+  return dirrection == SLS_CHILD_RIGHT?
+    &(node->right):
+    &(node->left);
+}
+
+slsBNode *sls_bnode_insert(slsBNode *node, slsBNode *child,
+                           slsChildSelector dirrection) {
+  if (!node || !child) {
+    fprintf(stderr, "ERROR %s %i:\n\tnode is null", __FILE__, __LINE__);
+    return NULL;
+  }
+
+  /* select child of parent node at given direction */
+  slsBNode *child_child = *(_sls_bnode_select_child(node, dirrection));
+  if (child_child) {
+    /* if child_child exists, insert it into child node */
+    sls_bnode_insert(child, child_child, dirrection);
+  }
+
+  child->parent = node;
+  *(_sls_bnode_select_child(node, dirrection)) = child;
+
   return child;
 }
 
-slsBNode *sls_bnode_insert_left(slsBNode *node, slsBNode *left)
-{
+slsBNode *sls_bnode_insert_left(slsBNode *node, slsBNode *left) {
   return sls_bnode_insert(node, left, SLS_CHILD_LEFT);
 }
 
-slsBNode *sls_bnode_insert_right(slsBNode *node, slsBNode *right)
-{
+slsBNode *sls_bnode_insert_right(slsBNode *node, slsBNode *right) {
   return sls_bnode_insert(node, right, SLS_CHILD_RIGHT);
 }
 
+slsBNode *sls_bnode_insert_parent(slsBNode *node, slsBNode *parent)
+{
+
+}

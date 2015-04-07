@@ -1,5 +1,5 @@
 #include "../include/animal/animal_game.h"
-#include <gtest/gtest.h>
+#include "../extern/googletest/include/gtest/gtest.h"
 
 class GameTests : public ::testing::Test {
  protected:

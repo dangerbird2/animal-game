@@ -1,7 +1,7 @@
 extern "C" {
 #include "../include/animal/animal_game.h"
 }
-#include <gtest/gtest.h>
+#include "../extern/googletest/include/gtest/gtest.h"
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -39,7 +39,11 @@ class BTreeTest : public ::testing::Test {
  protected:
   slsBTree *tree = nullptr;
 
-  virtual void SetUp() { tree = sls_btree_new(mock_copy, mock_free); }
+  virtual void SetUp() { 
+    tree = sls_btree_new(mock_copy, mock_free); 
+    int i = 10;
+    tree->head = sls_bnode_new(tree, (void const *)&i, nullptr, nullptr);
+  }
 
   virtual void TearDown() { sls_btree_destroy(tree); }
 };
@@ -49,17 +53,17 @@ TEST_F(BTreeTest, TreeExists) {
 }
 
 TEST_F(BTreeTest, MakeNode) {
-  int i = 10;
-
-  auto node = sls_bnode_new(tree, (void const *)&i, nullptr, nullptr);
+int i = 10;
+  auto node = (slsBNode*)nullptr;
+  node = sls_bnode_new(tree, (void const *)&i, nullptr, nullptr);
   EXPECT_NE(node, nullptr);
-
   sls_bnode_destroy(node);
 }
 
 TEST_F(BTreeTest, MakeInvalidNode) {
-  auto node = sls_bnode_new(nullptr, nullptr, nullptr, nullptr);
-  EXPECT_EQ(NULL, node);
+  auto node = (slsBNode*)nullptr;
+  node = sls_bnode_new(nullptr, nullptr, nullptr, nullptr);
+  EXPECT_EQ(nullptr, node);
 }
 
 TEST_F(BTreeTest, AddNodeToTree) {
@@ -69,13 +73,41 @@ TEST_F(BTreeTest, AddNodeToTree) {
   auto nodeA = sls_bnode_new(tree, (void const *)&i, nullptr, nullptr);
 
   auto nodeB = sls_bnode_new(tree, (void const *)&j, nodeA, nullptr);
-  tree->head = nodeB;
+  tree->head->right = nodeB;
   /* ensure the tree links are correct */
-  EXPECT_EQ(tree->head->left, nodeA);
+  EXPECT_EQ(tree->head->right->left, nodeA);
 
   /* ensure values are actually copied*/
   EXPECT_NE(&i, nodeA->val);
 }
+
+TEST_F(BTreeTest, TestLeftInsert) {
+  auto i = 100;
+  auto node = sls_bnode_insert_left(tree->head,
+    sls_bnode_new(tree, &i, nullptr, nullptr));
+  EXPECT_NE(nullptr, tree->head->left) 
+    << "\n\tinserted head node should be non-null\n";
+  EXPECT_EQ(tree->head->left, node)
+      << "\n\thead's left node should equal return value of sls_bnode_insert\n";
+}
+
+TEST_F(BTreeTest, TestRightInsert) {
+  auto i = 100;
+  auto node = sls_bnode_insert_right(tree->head,
+    sls_bnode_new(tree, &i, nullptr, nullptr));
+  EXPECT_NE(nullptr, tree->head->right)
+      << "\n\tinserted head node should be non-null\n";
+  EXPECT_EQ(tree->head->right, node)
+      << "\n\thead's left node should equal return value of sls_bnode_insert\n";
+}
+
+TEST_F(BTreeTest, TestInvalidInsert) {
+  auto i = 100;
+  auto child = sls_bnode_new(tree, &i, nullptr, nullptr);
+  auto node = sls_bnode_insert_right(nullptr, child);
+  EXPECT_EQ(nullptr, node);
+}
+
 
 /**
  * @brief Util test fixture
@@ -136,16 +168,18 @@ tests case-insensitive strcmp
 */
 TEST_F(UtilTest, StrCmpTest) {
   const auto l = 100lu;
-  auto valid_pairs = std::vector<int>{sls_strncmp_nocase("Q", "Q", l),
-                                      sls_strncmp_nocase("Q", "q", l),
-                                      sls_strncmp_nocase("Quit", "Quit", l),
-                                      sls_strncmp_nocase("Quit", "QuiT", l),
-                                      sls_strncmp_nocase("Quit", "QuiT", 1)};
-  auto invalid_pairs = std::vector<int>{sls_strncmp_nocase("Quit", "QuiT ", l),
-                                        sls_strncmp_nocase("Quit", " QuiT ", l),
-                                        sls_strncmp_nocase("Quit", " QuiT ", l),
-                                        sls_strncmp_nocase("no", " YES ", l),
-                                        sls_strncmp_nocase("", "   ", l)};
+  auto valid_pairs = std::vector<int>{ sls_strncmp_nocase("Q", "Q", l),
+                                       sls_strncmp_nocase("Q", "q", l),
+                                       sls_strncmp_nocase("Quit", "Quit", l),
+                                       sls_strncmp_nocase("Quit", "QuiT", l),
+                                       sls_strncmp_nocase("Quit", "QuiT", 1) };
+  auto invalid_pairs = 
+    std::vector<int>{sls_strncmp_nocase("Quit", "QuiT ", l),
+                    sls_strncmp_nocase("Quit", " QuiT ", l),
+                    sls_strncmp_nocase("Quit", " QuiT ", l),
+                    sls_strncmp_nocase("Quit", " QueiT ", l),
+                    sls_strncmp_nocase("no", " YES ", l),
+                    sls_strncmp_nocase("", "   ", l)};
 
   for (const auto &i : valid_pairs) {
     EXPECT_EQ(0, i);
