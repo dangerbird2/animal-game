@@ -333,21 +333,21 @@ void sls_animalnode_print_node(FILE *stream, slsBNode const *node) {
   right_right = right_right ? right_right : "no node";
 
   /* print da string */
-  fprintf(stderr, "    n--%s\n", left_left);
-  fprintf(stderr, "    |\n");
-  fprintf(stderr, "n--%s\n", left);
-  fprintf(stderr, "|   |\n");
-  fprintf(stderr, "|   y--%s\n", left_right);
-  fprintf(stderr, "|\n");
-  fprintf(stderr, "|\n");
-  fprintf(stderr, "%s\n", node_desc);
-  fprintf(stderr, "|\n");
-  fprintf(stderr, "|\n");
-  fprintf(stderr, "|   n--%s\n", right_left);
-  fprintf(stderr, "|   |\n");
-  fprintf(stderr, "y--%s\n", right);
-  fprintf(stderr, "    |\n");
-  fprintf(stderr, "    y--%s\n", right_right);
+  fprintf(stream, "    n--%s\n", left_left);
+  fprintf(stream, "    |\n");
+  fprintf(stream, "n--%s\n", left);
+  fprintf(stream, "|   |\n");
+  fprintf(stream, "|   y--%s\n", left_right);
+  fprintf(stream, "|\n");
+  fprintf(stream, "|\n");
+  fprintf(stream, "%s\n", node_desc);
+  fprintf(stream, "|\n");
+  fprintf(stream, "|\n");
+  fprintf(stream, "|   n--%s\n", right_left);
+  fprintf(stream, "|   |\n");
+  fprintf(stream, "y--%s\n", right);
+  fprintf(stream, "    |\n");
+  fprintf(stream, "    y--%s\n", right_right);
 }
 
 slsBNode **sls_attempt_traversal(slsBNode *node, slsResponse res) {
