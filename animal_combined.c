@@ -892,7 +892,8 @@ slsBNode *sls_decide_response(
     /* 
     first, see if we can traverse to a child node 
     */
-    slsBNode *new_node = *sls_attempt_traversal(node, res);
+    slsBNode *new_node = NULL;
+    new_node = *sls_attempt_traversal(node, res);
     if (new_node) {
         char const *dirrection = (new_node == node->left)?
             "left": "right";
@@ -904,7 +905,7 @@ slsBNode *sls_decide_response(
     if the attempted traversal returns a null pointer,
     the program queries the user to expand its decision tree
     */
-
+    
     if (res == SLS_YES && data->is_species) {
         /* in this event, the program guessed correctly, ending the game round */
         fprintf(stderr, "I guessed your animal!\nLet's play again\n");

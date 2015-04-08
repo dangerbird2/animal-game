@@ -392,44 +392,41 @@ slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res) {
     /* in this event, the program guessed correctly, ending the game round */
     fprintf(stderr, "I guessed your animal!\nLet's play again\n");
     new_node = node->tree->head;
-  } else if (res == SLS_NO && data->is_species) {
-    /*
+  } 
+  else if (res == SLS_NO && data->is_species) {
+    /* 
     here, the game guessed correctly, and the current question is an animal.
     It will ask the user for a new catagory to differentiate the user's (unkown)
     animal and the animal currently given
     */
     fprintf(stderr, "I guessed wrong.\n");
-    /* find what differentiates user's animal from given animal */
-    new_node = sls_ask_new_category(stream, node); 
+    new_node = sls_ask_new_category(stdin, node);
     slsBNode *parent = node->parent;
-
     node->parent = new_node;
     new_node->parent = parent;
 
     if (parent->left == node) {
       parent->left = new_node;
     } else {
-      parent->right = new_node;
+      parent->right = new_node; 
     }
-
-    /* traverse to new node, where program asks user
-    what the animal is */
+    new_node->left = node;
     return new_node;
 
-  } else if (!data->is_species) {
+  } 
+  else if (!data->is_species) {
     /*
     in this case, the current node describes a category.
     It will ask the user for the animal he/she was thinking about,
+    
     */
-    assert(!node->right);
-    new_node = sls_ask_new_animal(stream, node);
+    new_node = sls_ask_new_animal(stdin, node);
     new_node->parent = node;
-    node->left = new_node;
-
-  }
-
-  if (node->parent) {
-    assert(node->parent != node);
+    if (res == SLS_YES) {
+      node->right = new_node;
+    } else {
+      node->left = new_node;
+    }
   }
 
   /*
