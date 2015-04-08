@@ -181,8 +181,6 @@ slsResponse sls_parse_response(char const *res) {
     }
   }
 
-  int c = tolower(*ptr);
-
   if ((sls_strncmp_nocase("quit", res, len) == 0) ||
       (sls_strncmp_nocase("q", res, len) == 0)) {
     res_value = SLS_QUIT;
@@ -405,19 +403,14 @@ slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res) {
     new_node = sls_ask_new_category(stream, node); 
     slsBNode *parent = node->parent;
 
-    /* find which child the current node is */
-    slsChildSelector dir = (parent->left == node)?
-      SLS_CHILD_LEFT:
-      SLS_CHILD_RIGHT;
+    node->parent = new_node;
+    new_node->parent = parent;
 
-
-    /* move node to left of new_node (node's animal is *not* new_node's category) */
-    sls_bnode_insert_left(new_node, node);
-    /* insert new_node into parent's child */
-    sls_bnode_insert(parent, new_node, dir);
-
-    assert(*sls_bnode_select_child(parent, dir) != node);
-    assert(node->parent != parent);
+    if (parent->left == node) {
+      parent->left = new_node;
+    } else {
+      parent->right = new_node;
+    }
 
     /* traverse to new node, where program asks user
     what the animal is */
@@ -427,14 +420,11 @@ slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res) {
     /*
     in this case, the current node describes a category.
     It will ask the user for the animal he/she was thinking about,
-
     */
+    assert(!node->right);
     new_node = sls_ask_new_animal(stream, node);
-    if (res == SLS_YES) {
-      sls_bnode_insert_right(node, new_node);
-    } else {
-      sls_bnode_insert_left(node, new_node);
-    }
+    new_node->parent = node;
+    node->left = new_node;
 
   }
 

@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 #include "../include/animal/animal_game.h"
 #include "../extern/googletest/include/gtest/gtest.h"
-=======
-#include <animal/animal_game.h>
-#include <gtest/gtest.h>
->>>>>>> parent of d1c97a2... added additional documentation
+
 
 class GameTests : public ::testing::Test {
  protected:

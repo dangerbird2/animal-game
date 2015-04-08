@@ -50,10 +50,12 @@ slsBNode *sls_bnode_new(slsBTree *tree, void const *val, slsBNode *left,
     node->tree = tree;
     node->val = tree->copy_fn(val);
     if (left) {
-      sls_bnode_insert_left(node, left);
+      node->left = left;
+      left->parent = node;
     }
     if (right) {
-      sls_bnode_insert_right(node, right);
+      node->right = right;
+      right->parent = node;
     }
   } else {
     fprintf(stderr, "ERROR %s: malloc error!\n", __func__);
