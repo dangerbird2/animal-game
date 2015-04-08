@@ -3,7 +3,7 @@ Created by Steven Shea on 3/14/15.
 for CMPS 1600, project 2
 */
 
-#include "../include/animal/animal_game.h"
+#include <animal/animal_game.h>
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
@@ -180,6 +180,8 @@ slsResponse sls_parse_response(char const *res) {
       break;
     }
   }
+
+  int c = tolower(*ptr);
 
   if ((sls_strncmp_nocase("quit", res, len) == 0) ||
       (sls_strncmp_nocase("q", res, len) == 0)) {

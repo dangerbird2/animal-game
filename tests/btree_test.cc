@@ -1,5 +1,5 @@
 extern "C" {
-#include "../include/animal/animal_game.h"
+#include <animal/animal_game.h>
 }
 #include "../extern/googletest/include/gtest/gtest.h"
 #include <string>

@@ -54,8 +54,8 @@ struct slsAnimalData {
  * @brief create animal data structure
  * @details destroy with sls_animal_free
  *
- * @param is_species SLS_TRUE if species node, SLS_FALSE if category
- * @param description node description
+ * @param is_species [description]
+ * @param description [description]
  *
  * @return [description]
  */
@@ -80,8 +80,7 @@ void sls_animaldata_free(slsAnimalData *data);
 
 /**
  * @brief free animal data
- * @details used as a callback function to free data in slsBTree containing
- * slsAnimalData
+ * @details [long description]
  *
  * @param data pointer to heap-allocated slsAnimalData
  */
