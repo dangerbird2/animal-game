@@ -179,4 +179,7 @@ slsBNode *sls_bnode_insert_left(slsBNode *node, slsBNode *left);
  */
 slsBNode *sls_bnode_insert_right(slsBNode *node, slsBNode *right);
 
+slsBNode **sls_bnode_select_child(slsBNode *node, slsChildSelector dirrection);
+
+
 #endif /*_ANIMAL_BTREE_H_*/

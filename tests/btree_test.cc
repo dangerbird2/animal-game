@@ -85,7 +85,7 @@ TEST_F(BTreeTest, TestLeftInsert) {
   auto i = 100;
   auto node = sls_bnode_insert_left(tree->head,
     sls_bnode_new(tree, &i, nullptr, nullptr));
-  EXPECT_NE(nullptr, tree->head->left) 
+  ASSERT_NE(nullptr, tree->head->left) 
     << "\n\tinserted head node should be non-null\n";
   EXPECT_EQ(tree->head->left, node)
       << "\n\thead's left node should equal return value of sls_bnode_insert\n";
@@ -97,7 +97,7 @@ TEST_F(BTreeTest, TestRightInsert) {
   auto i = 100;
   auto node = sls_bnode_insert_right(tree->head,
     sls_bnode_new(tree, &i, nullptr, nullptr));
-  EXPECT_NE(nullptr, tree->head->right)
+  ASSERT_NE(nullptr, tree->head->right)
       << "\n\tinserted head node should be non-null\n";
   EXPECT_EQ(tree->head->right, node)
       << "\n\thead's left node should equal return value of sls_bnode_insert\n";
@@ -116,13 +116,19 @@ TEST_F(BTreeTest, TestInvalidInsert) {
 TEST_F(BTreeTest, TestMiddleInsert) {
   auto node = tree->head;
   for (auto i=0; i<10; ++i) {
+    if (!node) {
+      FAIL() << "node failed to insert";
+    }
     node = sls_bnode_insert_left(
       node,
       sls_bnode_new(tree,  &i, nullptr, nullptr));
   }
   node = tree->head;
   auto ii = 1000;
-  auto node2 = sls_bnode_insert_left(node, sls_bnode_new(tree, &ii, nullptr, nullptr));
+  auto node2 = (slsBNode*)nullptr;
+  node2 =
+      sls_bnode_insert_left(node, sls_bnode_new(tree, &ii, nullptr, nullptr));
+  ASSERT_NE(node2, nullptr);
   EXPECT_EQ(tree->head->left, node->left);
   EXPECT_EQ(node2, node->left);
   EXPECT_EQ(*((int*)node2->val), ii);

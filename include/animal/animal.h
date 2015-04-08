@@ -70,7 +70,6 @@ slsAnimalData *sls_animal_new(slsBool is_species, char const *description);
  */
 void *sls_animal_copy(void const *data);
 
-
 /**
  * @brief free animal data
  * @details typed version of sls_animal_free

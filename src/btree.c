@@ -7,11 +7,8 @@ for CMPS 1600, project 2
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
-/*
-private function declarations
-*/
-slsBNode **_sls_bnode_select_child(slsBNode *node, slsChildSelector dirrection);
 
 
 slsBTree *sls_btree_new(slsCopyFn copy_fn, slsFreeFn free_fn) {
@@ -52,8 +49,12 @@ slsBNode *sls_bnode_new(slsBTree *tree, void const *val, slsBNode *left,
   if (node) {
     node->tree = tree;
     node->val = tree->copy_fn(val);
-    node->left = left;
-    node->right = right;
+    if (left) {
+      sls_bnode_insert_left(node, left);
+    }
+    if (right) {
+      sls_bnode_insert_right(node, right);
+    }
   } else {
     fprintf(stderr, "ERROR %s: malloc error!\n", __func__);
   }
@@ -62,22 +63,30 @@ slsBNode *sls_bnode_new(slsBTree *tree, void const *val, slsBNode *left,
 
 void sls_bnode_destroy(slsBNode *node) {
   if (node) {
-    /* try freeing node data */
-    if (node->tree) {
-      node->tree->free_fn(node->val);
-    } else {
-      fprintf(stderr, "WARNING %s: node->tree is null. Cannot free node data\n",
-              __func__);
-    }
+
+    assert(node != node->parent);
+
+    assert((!node->parent) || node->val != node->parent->val);
 
     /**
      * recursively destroy child nodes
      */
     if (node->left) {
       sls_bnode_destroy(node->left);
+      node->left = NULL;
     }
     if (node->right) {
       sls_bnode_destroy(node->right);
+      node->right = NULL;
+    }
+
+    /* try freeing node data */
+    if (node->tree) {
+      node->tree->free_fn(node->val);
+      node->val = NULL;
+    } else {
+      fprintf(stderr, "WARNING %s: node->tree is null. Cannot free node data\n",
+              __func__);
     }
 
     free(node);
@@ -86,7 +95,7 @@ void sls_bnode_destroy(slsBNode *node) {
   }
 }
 
-slsBNode **_sls_bnode_select_child(slsBNode *node, slsChildSelector dirrection)
+slsBNode **sls_bnode_select_child(slsBNode *node, slsChildSelector dirrection)
 {
   if (!node) {
     return NULL;
@@ -103,23 +112,20 @@ slsBNode *sls_bnode_insert(slsBNode *node, slsBNode *child,
     return NULL;
   }
 
-  /* select child of parent node at given direction */
-  slsBNode *child_child = *(_sls_bnode_select_child(node, dirrection));
-  if (child_child) {
-    /* if child_child exists, insert it into child node */
-    sls_bnode_insert(child, child_child, dirrection);
-  }
 
-  child->parent = node;
-  *(_sls_bnode_select_child(node, dirrection)) = child;
+
 
   return child;
 }
 
 slsBNode *sls_bnode_insert_left(slsBNode *node, slsBNode *left) {
-  return sls_bnode_insert(node, left, SLS_CHILD_LEFT);
+  slsBNode *new_node = sls_bnode_insert(node, left, SLS_CHILD_LEFT);
+  
+  return new_node;
 }
 
 slsBNode *sls_bnode_insert_right(slsBNode *node, slsBNode *right) {
-  return sls_bnode_insert(node, right, SLS_CHILD_RIGHT);
+  slsBNode *new_node = sls_bnode_insert(node, right, SLS_CHILD_RIGHT);
+
+  return new_node;
 }

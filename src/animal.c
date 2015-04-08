@@ -32,16 +32,19 @@ void *sls_animal_copy(void const *data) {
 }
 
 
-void sls_animaldata_free(slsAnimalData *data);
+void sls_animaldata_free(slsAnimalData *data) {
+  if (data) {
+    if (data->description) {
+      free(data->description);
+    }
+    free(data);
+  }
+}
+
+
 
 void sls_animal_free(void *data) {
-  slsAnimalData *t_data = data;
-  if (t_data) {
-    if (t_data->description) {
-      free(t_data->description);
-    }
-    free(t_data);
-  }
+  sls_animaldata_free((slsAnimalData *)data);
 }
 
 slsAnimalData *sls_animal_new(slsBool is_species, char const *description) {
@@ -362,7 +365,7 @@ slsBNode **sls_attempt_traversal(slsBNode *node, slsResponse res) {
 
 slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res) {
   
-  assert(stream);
+
   if (!node || !node->val || !node->tree) {
     assert(0);
     return NULL;
@@ -411,6 +414,9 @@ slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res) {
     /* insert new_node into parent's child */
     sls_bnode_insert(parent, new_node, dir);
 
+    assert(*sls_bnode_select_child(parent, dir) != node);
+    assert(node->parent != parent);
+
     /* traverse to new node, where program asks user
     what the animal is */
     return new_node;
@@ -428,6 +434,10 @@ slsBNode *sls_decide_response(FILE *stream, slsBNode *node, slsResponse res) {
       sls_bnode_insert_left(node, new_node);
     }
 
+  }
+
+  if (node->parent) {
+    assert(node->parent != node);
   }
 
   /*
